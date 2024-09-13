@@ -26,7 +26,7 @@ export const Header = () => {
 
             </div>
             <div>
-                <ul className="hidden lg:flex md:ml-4 gap-10">
+                <ul className="hidden md:flex md:ml-4 gap-10">
                     {
                         navbarLinks.map(link => (
                             <Link
@@ -42,10 +42,10 @@ export const Header = () => {
                 </ul>
             </div>
             <div className="flex gap-2">
-                <Button>
+                {/* <Button>
                     <Plus className="w-4 h-4 mr-2" />
                     Publicar anuncio
-                </Button>
+                </Button> */}
                 <Button variant="outline">Login</Button>
             </div>
         </div>
