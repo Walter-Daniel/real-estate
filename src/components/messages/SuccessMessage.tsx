@@ -1,4 +1,3 @@
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { CheckCircleIcon } from "lucide-react";
 
 interface MessageProps {
