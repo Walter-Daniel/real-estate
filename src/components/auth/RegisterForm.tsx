@@ -15,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { registerSchema } from '@/schemas/auth.schema';
@@ -42,7 +41,12 @@ export const RegisterForm = () => {
     setSuccess('');
     startTransition(async() => {
       const { ok, message } = await register(values);
-      (!ok) ? setError(message) : setSuccess(message);
+      if(!ok){
+        setError(message)
+      }else {
+        setSuccess(message)
+        form.reset();
+      }
     })
   };
 
