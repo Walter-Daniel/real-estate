@@ -1,14 +1,24 @@
+
 import type { NextAuthConfig } from "next-auth";
 import bcrypt from "bcryptjs";
 
-import Credentials from "next-auth/providers/credentials"
+import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import FacebookProvider from "next-auth/providers/facebook";
+
 import { loginSchema } from "./schemas/auth.schema"
 import { getUserByEmail } from "./data/user";
+
  
 
 
 export default { 
     providers: [
+        FacebookProvider({
+            clientId: process.env.FACEBOOK_CLIENT_ID,
+            clientSecret: process.env.FACEBOOK_CLIENT_SECRET
+        }),
+        Google,
         Credentials({
             async authorize(credentials){
                 const validatedFields = loginSchema.safeParse(credentials);
