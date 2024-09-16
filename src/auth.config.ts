@@ -18,7 +18,10 @@ export default {
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET
         }),
-        Google,
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET
+        }),
         Credentials({
             async authorize(credentials){
                 const validatedFields = loginSchema.safeParse(credentials);

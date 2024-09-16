@@ -20,7 +20,7 @@ export const Social = () => {
          size='lg'
          className='w-full'
          variant='outline'
-        //  onClick={() => {}}
+         onClick={() => onClick('google')}
         >
             <Image 
                 src='/google.png'
