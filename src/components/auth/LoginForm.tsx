@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { useSearchParams } from 'next/navigation';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { CardWrapper } from './CardWrapper';
 import {
@@ -25,6 +26,14 @@ import { cn } from '@/lib/utils';
 
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const errorLogin = searchParams.get("error");
+  const urlError = errorLogin === "OAuthAccountNotLinked"
+  ? "El email ya se encuentra en uso con otro proveedor."
+  : errorLogin === "OAuthCallbackError"
+  ? "Se produjo un error al intentar iniciar sesión."
+  : "";
+  
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isPending, startTransition] = useTransition();
@@ -78,8 +87,8 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          {error && (<ErrorMessage message={error}/>)}
-          {success && (<SuccessMessage message={success}/>)}
+          <ErrorMessage message={error || urlError}/>
+          <SuccessMessage message={success}/>
           <Button 
             type="submit" 
             className={cn('w-full',{
