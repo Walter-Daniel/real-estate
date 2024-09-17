@@ -15,7 +15,8 @@ export const authRoutes = [
     "/auth/login",
     "/auth/register",
     "/auth/error",
-    "/auth/reset"
+    "/auth/reset",
+    "/auth/new-password"
 ]
 
 //Prefijo para la ruta de autenticación API
