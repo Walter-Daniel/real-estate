@@ -2,6 +2,8 @@
 
 import { getUserByEmail } from "@/data/user";
 import { maskEmail } from "@/helpers/maskEmail";
+import { sendPasswordResetEmail } from "@/lib/mail";
+import { generatePasswordResetToken } from "@/lib/tokens";
 import { resetFormSchema } from "@/schemas/auth.schema";
 import { z } from "zod";
 
@@ -23,8 +25,13 @@ export const resetFormAction = async(values: z.infer<typeof resetFormSchema>) =>
     }
    }
 
-   const emailToSend = maskEmail(email)
+   const passwordResetToken = await generatePasswordResetToken(email);
+   await sendPasswordResetEmail(
+    passwordResetToken.email,
+    passwordResetToken.token
+   )
 
+   const emailToSend = maskEmail(email)
    return {
     ok: true,
     message: `Hemos enviado un correo electrónico a ${emailToSend} con un enlace para que reestablescas tu contraseña.`
