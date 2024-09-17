@@ -3,7 +3,8 @@
 export const publicRoutes = [
     "/",
     "/rent",
-    "/find"
+    "/find",
+    "/auth/new-verification"
 ]
 
 //Array de rutas usadas para la autenticación
