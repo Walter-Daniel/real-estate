@@ -6,3 +6,4 @@ export { LoginForm } from './LoginForm';
 export { RegisterForm } from './RegisterForm';
 export { CardWrapper } from './CardWrapper'
 export { Social } from './Social';
+export { VerificationForm } from './VerificationForm';
