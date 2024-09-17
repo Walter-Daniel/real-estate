@@ -5,6 +5,7 @@ export const publicRoutes = [
     "/rent",
     "/find",
     "/auth/new-verification"
+    
 ]
 
 //Array de rutas usadas para la autenticación
@@ -13,7 +14,8 @@ export const publicRoutes = [
 export const authRoutes = [
     "/auth/login",
     "/auth/register",
-    "/auth/error"
+    "/auth/error",
+    "/auth/reset"
 ]
 
 //Prefijo para la ruta de autenticación API

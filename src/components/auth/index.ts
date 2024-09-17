@@ -1,3 +1,4 @@
+export { ResetPasswordForm } from './ResetPasswordForm';
 export { BackButton } from './BackButton';
 export { ErrorCard } from './ErrorCard';
 export { Header } from './Header';

@@ -20,3 +20,9 @@ export const registerSchema = z.object({
     message: 'El nombre debe tener por lo menos 6 caracteres.'
   })
 });
+
+export const resetFormSchema = z.object({
+  email: z.string().email({
+    message: 'Campo requerido'
+  })
+});

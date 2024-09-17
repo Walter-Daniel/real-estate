@@ -23,6 +23,7 @@ import { loginSchema } from '@/schemas/auth.schema';
 import { ErrorMessage, SuccessMessage } from '@/components/messages';
 import { login } from '@/actions/login';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 
 export const LoginForm = () => {
@@ -83,6 +84,16 @@ export const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Ingresa tu contraseña..." {...field} type='password'/>
                 </FormControl>
+                <Button
+                  size="sm"
+                  variant="link"
+                  asChild
+                  className='px-0 font-normal'
+                >
+                  <Link href="/auth/reset">
+                    Has olvidado tu contraseña?
+                  </Link>
+                </Button>
                 <FormMessage />
               </FormItem>
             )}
@@ -91,11 +102,8 @@ export const LoginForm = () => {
           <SuccessMessage message={success}/>
           <Button 
             type="submit" 
-            className={cn('w-full',{
-              'bg-black hover:bg-black' : !isPending,
-              'bg-gray-500' : isPending
-              
-            })}
+            className="w-full text-white"
+            variant="secondary"
           >
             Iniciar sesión
           </Button>
