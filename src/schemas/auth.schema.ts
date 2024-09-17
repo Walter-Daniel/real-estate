@@ -26,3 +26,21 @@ export const resetFormSchema = z.object({
     message: 'Campo requerido'
   })
 });
+
+export const resetPasswordSchema = z.object({
+  password: z
+    .string()
+    .min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
+    // .regex(/[A-Z]/, { message: "La contraseña debe contener al menos una letra mayúscula" })
+    // .regex(/[a-z]/, { message: "La contraseña debe contener al menos una letra minúscula" })
+    // .regex(/[0-9]/, { message: "La contraseña debe contener al menos un número" })
+    // .regex(/[\W_]/, { message: "La contraseña debe contener al menos un carácter especial" }),
+
+  confirmPassword: z
+    .string()
+    .min(6, { message: "La confirmación de la contraseña debe tener al menos 6 caracteres" }),
+})
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: "Las contraseñas no coinciden",
+  });
