@@ -102,11 +102,8 @@ export const RegisterForm = () => {
           {success && (<SuccessMessage message={success}/>)}
           <Button 
             type="submit" 
-            className={cn('w-full',{
-              'bg-black hover:bg-black' : !isPending,
-              'bg-gray-500' : isPending
-              
-            })}
+            className="w-full"
+            variant="secondary"
           >
             Registrarse
           </Button>

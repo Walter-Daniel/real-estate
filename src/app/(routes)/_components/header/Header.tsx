@@ -46,7 +46,7 @@ export const Header = () => {
                     <Plus className="w-4 h-4 mr-2" />
                     Publicar anuncio
                 </Button> */}
-                <Button variant="outline">Login</Button>
+                <Button>Login</Button>
             </div>
         </div>
     )

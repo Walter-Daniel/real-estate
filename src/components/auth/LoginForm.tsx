@@ -102,7 +102,7 @@ export const LoginForm = () => {
           <SuccessMessage message={success}/>
           <Button 
             type="submit" 
-            className="w-full text-white"
+            className="w-full"
             variant="secondary"
           >
             Iniciar sesión

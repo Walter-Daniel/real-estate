@@ -22,8 +22,9 @@ model User {
   image         String?
   accounts      Account[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Property  Property[]
 }
 
 model Account {
@@ -63,4 +64,67 @@ model PasswordResetToken {
   expires DateTime
 
   @@unique([email, token])
+}
+
+enum PROPERTY_TYPES {
+  OFFICES
+  APARTMENT
+  TOWN_HOUSE
+  PENT_HOUSE
+  SELECT
+  APARTMENT_HOTEL
+  APARTMENT_RESIDENTIAL
+  WAREHOUSE
+  RESIDENTIAL_FLOOR
+  LAND
+}
+
+enum Availablity_Type {
+  AVAILABLE
+  UNAVAILABLE
+  SOLD
+}
+
+model Property {
+  id                                  String           @id @default(cuid())
+  property_title                      String
+  property_type                       PROPERTY_TYPES
+  structure                           String
+  listing_type                        String
+  style                               String
+  view                                String
+  utility_payment                     String
+  year_built                          String
+  pets_allowed                        String
+  available                           String
+  rent_price                          String
+  price_prefix                        String
+  payment_frequency                   String
+  payment_plan                        String
+  coordinates                         Json
+  street_Number                       String
+  locality                            String
+  postal_code                         String
+  logistics                           String
+  parking_lot                         String
+  parking_slots                       String
+  fire_place                          String
+  entry_floor                         String
+  room_list                           String
+  bedroom                             String
+  bathroom                            String
+  specification                       String
+  images                              String[]
+  utilities                           String[]
+  description                         String
+  additional_details                  String
+  additional_facilities_and_amenities String
+  availablity                         Availablity_Type @default(AVAILABLE)
+
+  //Relations
+  owner  User   @relation(fields: [userId], references: [id])
+  userId String
+
+  createdAt     DateTime @default(now())
+  date_modified DateTime @default(now()) @updatedAt
 }

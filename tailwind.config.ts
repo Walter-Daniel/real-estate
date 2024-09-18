@@ -21,12 +21,12 @@ const config: Config = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: '#25a18e',
+				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				DEFAULT: '#000000',
-  				foreground: 'hsl(var(--secondary-foreground))'
+				DEFAULT: '#111827',
+  				foreground: '#fff'
   			},
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
