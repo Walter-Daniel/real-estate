@@ -84,6 +84,7 @@ export const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="Ingresa tu contraseña..." {...field} type='password'/>
                 </FormControl>
+                <FormMessage />
                 <Button
                   size="sm"
                   variant="link"
@@ -94,7 +95,6 @@ export const LoginForm = () => {
                     Has olvidado tu contraseña?
                   </Link>
                 </Button>
-                <FormMessage />
               </FormItem>
             )}
           />
