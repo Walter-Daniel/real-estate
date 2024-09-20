@@ -95,3 +95,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  /* scroll-snap-type: x mandatory; */
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* .scroll-item {
+  scroll-snap-align: start;
+} */
