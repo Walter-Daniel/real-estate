@@ -33,7 +33,7 @@ export const categoryItems: iAppProps[] = [
   },
   {
     id: 3,
-    name: "ecohouse",
+    name: "eco-house",
     description: "Esta propiedad es considerada una casa ecológica.",
     title: "Casa Ecológica",
     imageUrl:
@@ -41,7 +41,7 @@ export const categoryItems: iAppProps[] = [
   },
   {
     id: 4,
-    name: "amazingView",
+    name: "amazing-view",
     description: "Esta propiedad tiene una vista impresionante.",
     title: "Vista Impresionante",
     imageUrl:
