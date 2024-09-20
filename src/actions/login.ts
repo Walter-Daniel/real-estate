@@ -6,6 +6,7 @@ import { generateVerificationToken } from '@/lib/tokens';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { loginSchema } from '@/schemas/auth.schema';
 import { AuthError } from 'next-auth';
+import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const login = async(values: z.infer<typeof loginSchema>) => {
@@ -43,6 +44,7 @@ export const login = async(values: z.infer<typeof loginSchema>) => {
           password,
           redirectTo: DEFAULT_LOGIN_REDIRECT  
         })
+        revalidatePath(DEFAULT_LOGIN_REDIRECT);
         return {
             ok: true,
             message: "Inicio de sesión exitoso!"
