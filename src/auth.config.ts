@@ -9,9 +9,6 @@ import FacebookProvider from "next-auth/providers/facebook";
 import { loginSchema } from "./schemas/auth.schema"
 import { getUserByEmail } from "./data/user";
 
- 
-
-
 export default { 
     providers: [
         FacebookProvider({

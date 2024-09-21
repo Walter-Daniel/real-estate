@@ -10,12 +10,6 @@ const nextConfig = {
             },
             {
               protocol: 'https',
-              hostname: 'a0.muscache.com',
-              port: '',
-              pathname: '**',
-            },
-            {
-              protocol: 'https',
               hostname: 'img.icons8.com',
               port: '',
               pathname: '**',
