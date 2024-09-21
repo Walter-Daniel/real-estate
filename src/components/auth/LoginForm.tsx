@@ -104,6 +104,7 @@ export const LoginForm = () => {
             type="submit" 
             className="w-full"
             variant="secondary"
+            disabled={isPending}
           >
             Iniciar sesión
           </Button>
