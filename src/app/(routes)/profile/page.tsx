@@ -7,6 +7,7 @@ export default async function ProfilePage() {
       {JSON.stringify(session)}
       <form action={async() => {
         "use server";
+        console.log('click')
         await signOut({
             redirectTo: "/auth/login"
         });

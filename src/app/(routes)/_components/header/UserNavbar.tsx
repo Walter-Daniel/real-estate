@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -8,23 +7,26 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { MenuIcon, User2 } from 'lucide-react';
-import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { logoutAction } from '@/actions/auth/logout';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 export const UserNavbar = () => {
-    const session = useSession();
+    const user = useCurrentUser();
+    console.log({user})
+    console.log('aaaaaaaaaaaaaaa');
     const onClick = () => {
-        signOut();
+        logoutAction();
     }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className='rounded-md border border-stone-500 px-2 py-2 flex items-center gap-x-3 shadow-md'>
                     <MenuIcon className='w-5 h-5' />
                     {
-                        session.data?.user?.image ? (
+                        user?.image ? (
                             <Image
-                                src={session.data.user.image}
+                                src={user.image}
                                 alt='user image'
                                 width={25}
                                 height={25}
@@ -35,7 +37,7 @@ export const UserNavbar = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 {
-                    session.data?.user ? (
+                    user ? (
                         <DropdownMenuItem onClick={onClick}>
                             Salir
                         </DropdownMenuItem>

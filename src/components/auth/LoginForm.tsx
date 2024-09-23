@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState, useTransition } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,12 +21,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { loginSchema } from '@/schemas/auth.schema';
 import { ErrorMessage, SuccessMessage } from '@/components/messages';
-import { login } from '@/actions/login';
+import { loginAction } from '@/actions/login';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useAuth } from '@/hooks/useAuth';
 
 
 export const LoginForm = () => {
+  const router = useRouter();
+  const { login } = useAuth();
   const searchParams = useSearchParams();
   const errorLogin = searchParams.get("error");
   const urlError = errorLogin === "OAuthAccountNotLinked"
@@ -47,9 +51,16 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    setError('');
+    setSuccess('');
     startTransition(async() => {
-      const { ok, message } = await login(values);
-      (!ok) ? setError(message) : setSuccess(message);
+    const result = await login(values.email, values.password);
+    if (result.success) {
+      setSuccess('Inicio de sesión exitoso!');
+      router.push('/profile');
+    } else {
+      setError(result.error || 'An error occurred during login');
+    }
     })
   };
 

@@ -2,13 +2,12 @@
 
 import * as React from "react"
 import Image from "next/image"
-import Link from "next/link"
-import { navbarLinks } from "./linkNavbar"
 import { usePathname } from "next/navigation"
 import { UserNavbar } from "./UserNavbar"
 
 export const Header = () => {
     const path = usePathname();
+    console.log('aaaa')
     return (
         <div className="flex justify-between px-4 py-2 md:items-center shadow-md fixed top-0 w-full z-10 bg-background">
             <div className="flex items-center">
@@ -23,20 +22,7 @@ export const Header = () => {
 
             </div>
             <div>
-                <ul className="hidden md:flex md:ml-4 gap-10">
-                    {
-                        navbarLinks.map(link => (
-                            <Link
-                                href={link.url}
-                                key={link.url}
-                                className={`font-medium text-sm hover:text-primary 
-                                ${path === link.url && 'text-primary'}`}
-                            >
-                                {link.title}
-                            </Link>
-                        ))
-                    }
-                </ul>
+        
             </div>
             <div className="flex gap-2">
                 <UserNavbar />
