@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState, useTransition } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -21,16 +22,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { loginSchema } from '@/schemas/auth.schema';
 import { ErrorMessage, SuccessMessage } from '@/components/messages';
-import { loginAction } from '@/actions/login';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import { useAuth } from '@/hooks/useAuth';
-
+import { login } from '@/actions/auth/login';
 
 export const LoginForm = () => {
-  const router = useRouter();
-  const { login } = useAuth();
   const searchParams = useSearchParams();
   const errorLogin = searchParams.get("error");
   const urlError = errorLogin === "OAuthAccountNotLinked"
@@ -41,6 +35,7 @@ export const LoginForm = () => {
   
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -50,16 +45,22 @@ export const LoginForm = () => {
     }
   });
 
+  useEffect(() => {
+    if (authenticated) {
+      window.location.replace("/profile");
+    }
+  }, [authenticated]);
+
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
     setError('');
     setSuccess('');
     startTransition(async() => {
-    const result = await login(values.email, values.password);
-    if (result.success) {
-      setSuccess('Inicio de sesión exitoso!');
-      router.push('/profile');
+    const { ok, message } = await login(values);
+    if (ok) {
+      message === "Inicio de sesión exitoso!" ? setAuthenticated(true) : setSuccess(message)
     } else {
-      setError(result.error || 'An error occurred during login');
+      setError(message);
+      setAuthenticated(false);
     }
     })
   };

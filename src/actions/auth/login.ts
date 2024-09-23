@@ -9,7 +9,7 @@ import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-export const loginAction = async(values: z.infer<typeof loginSchema>) => {
+export const login = async(values: z.infer<typeof loginSchema>) => {
     const validatedFields = loginSchema.safeParse(values);
 
     if(!validatedFields.success){
