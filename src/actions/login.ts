@@ -9,7 +9,7 @@ import { AuthError } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-export const login = async(values: z.infer<typeof loginSchema>) => {
+export const loginAction = async(values: z.infer<typeof loginSchema>) => {
     const validatedFields = loginSchema.safeParse(values);
 
     if(!validatedFields.success){
@@ -42,7 +42,7 @@ export const login = async(values: z.infer<typeof loginSchema>) => {
         await signIn("credentials", {
           email,
           password,
-          redirectTo: DEFAULT_LOGIN_REDIRECT  
+          redirect: false
         })
         return {
             ok: true,
