@@ -8,11 +8,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { MenuIcon, User2 } from 'lucide-react';
+import { HouseIcon, MenuIcon, Notebook, PlusSquare, Star, User2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { logoutAction } from '@/actions/auth/logout';
+import { ExitIcon } from '@radix-ui/react-icons';
 
 export const UserNavbar = () => {
     const user = useCurrentUser();
@@ -22,42 +23,52 @@ export const UserNavbar = () => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className='rounded-md border border-stone-500 px-2 py-2 flex items-center gap-x-3 shadow-md'>
-                    <MenuIcon className='w-5 h-5' />
-                    {
-                        user?.image ? (
-                            <Image
-                                src={user.image}
-                                alt='user image'
-                                width={25}
-                                height={25}
-                                className='h-auto rounded-full'
-                            />
-                        ) : <User2 className='w-5 h-5' />
-                    }
+                <MenuIcon className='w-5 h-5' />
+                {
+                    user?.image ? (
+                        <Image
+                            src={user.image}
+                            alt='user image'
+                            width={25}
+                            height={25}
+                            className='h-auto rounded-full'
+                        />
+                    ) : <User2 className='w-5 h-5' />
+                }
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className='mr-4 p-3'>
                 {
                     user ? (
                         <>
-                                <DropdownMenuItem>
-                                <Link href="#">
-                                    Favoritos
+                            <DropdownMenuItem>
+                                <Link href={`create/${user.id}/structure`} className='flex items-center'>
+                                    <PlusSquare className='w-4 h-4 mr-2'/>
+                                    Agregar propiedad
                                 </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                <Link href="#">
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="#" className='flex items-center'>
+                                <HouseIcon className='w-4 h-4 mr-2'/>
                                     Mis propiedades
                                 </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                <Link href="#">
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="#" className='flex items-center'>
+                                    <Star className='w-4 h-4 mr-2'/>
+                                    Favoritos
+                                </Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <Link href="#" className='flex items-center'>
+                                <Notebook className='w-4 h-4 mr-2'/>
                                     Mis reservaciones
                                 </Link>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={onClick}>
-                                    Salir
-                                </DropdownMenuItem>
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={onClick}>
+                                <ExitIcon className='w-4 h-4 mr-2' />
+                                Salir
+                            </DropdownMenuItem>
                         </>
 
                     ) : (

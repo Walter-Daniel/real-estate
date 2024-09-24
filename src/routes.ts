@@ -26,7 +26,7 @@ export const apiAuthPrefix = "/api/auth";
 //Requieren autenticación
 export const privateRoutes = [
     "/profile",
-    "/create-ad",
+    "/create/[id]/structure",
 ]
  
 //Ruta por deferecto para la redirección después de iniciar sesión.
