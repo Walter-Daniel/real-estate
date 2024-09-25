@@ -43,7 +43,7 @@ export const categoryItems: iAppProps[] = [
     id: 4,
     name: "amazing-view",
     description: "Esta propiedad tiene una vista impresionante.",
-    title: "Vista Impresionante",
+    title: "Vistas de ensueño",
     imageUrl:
       "https://img.icons8.com/external-others-pike-picture/50/external-business-office-and-workplace-others-pike-picture-8.png",
   },
