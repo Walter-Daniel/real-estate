@@ -3,7 +3,7 @@
 import { auth } from '@/auth';
 import { db } from '@/lib/db';
 
-export const createHome = async() => {
+export const createNewHome = async() => {
 
     const session = await auth();
     if(!session?.user){
