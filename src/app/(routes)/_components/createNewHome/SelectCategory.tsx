@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardHeader } from '@/components/ui';
 import { categoryItems } from '@/lib/categoryItemis';
+import { cn } from '@/lib/utils';
 
 export const SelectCategory = () => {
     const [selectedCategory, setSelectedCategory] = useState<string | null>()
@@ -12,7 +13,9 @@ export const SelectCategory = () => {
         {categoryItems.map((item) => (
             <div className='cursor-pointer' key={item.id}>
                 <Card 
-                    className={selectedCategory === item.name ? 'border-primary border-2' : ''}
+                    className={cn('min-h-[138px]', 
+                        selectedCategory === item.name ? 'border-primary border' : ''
+                    )}
                     onClick={() => setSelectedCategory(item.name)}
                 >
                     <CardHeader>
