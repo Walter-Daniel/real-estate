@@ -14,17 +14,13 @@ export const Navbar = () => {
                     width={50}
                     height={50}
                     alt="Logo"
-                    className="h-auto mr-1 text-red-500"
+                    className="h-auto mr-1"
                 />
                 <span className="font-bold">Valles.tuc</span>
 
             </div>
-            <div>
-                <Search />
-            </div>
-            <div className="flex gap-2 pr-4">
-                <UserNavbar />
-            </div>
+            <Search />
+            <UserNavbar />
         </div>
     )
 }

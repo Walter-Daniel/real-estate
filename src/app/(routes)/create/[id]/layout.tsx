@@ -5,7 +5,7 @@ export default function CreateLayout({
  children: React.ReactNode;
 }) {
   return (
-    <div className="mt-10">
+    <div className="pt-10">
       {children}
     </div>
   );
