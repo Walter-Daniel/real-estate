@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { Card, CardHeader } from '@/components/ui';
 import { categoryItems } from '@/lib/categoryItemis';
