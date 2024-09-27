@@ -1,6 +1,6 @@
 import { FormHomeDescription } from "@/app/(routes)/_components";
 
-export default function DescriptionPage() {
+export default function DescriptionPage({params}: {params:{id: string}}) {
   return (
     <>
       <div className='w-3/5 mx-auto'>
@@ -8,7 +8,7 @@ export default function DescriptionPage() {
           Describe tu casa lo mejor que puedas.
         </h2>
       </div>
-      <FormHomeDescription />
+      <FormHomeDescription homeId={params.id}/>
     </>
   );
 }
