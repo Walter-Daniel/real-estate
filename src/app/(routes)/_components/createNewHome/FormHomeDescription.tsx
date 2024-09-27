@@ -17,12 +17,13 @@ import { DescriptionSchema, DescriptionSchemaType } from "@/schemas/new-home-sch
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader } from "@/components/ui"
 import { BottomBar } from "./BottomBar"
+import { createDescription } from "@/actions"
 
-export const FormHomeDescription = () => {
+export const FormHomeDescription = ({homeId}:{homeId: string}) => {
   const form = useForm<DescriptionSchemaType>({
     resolver: zodResolver(DescriptionSchema),
     defaultValues: {
-      id: "sdasdasdas",
+      id: homeId,
       title: "",
       description: "",
       guests: 0,
@@ -32,8 +33,8 @@ export const FormHomeDescription = () => {
     }
   })
 
-  function onSubmit(values: DescriptionSchemaType) {
-    console.log(values)
+  const onSubmit = async(values: DescriptionSchemaType) => {
+     await createDescription(values);
   }
 
   return (
@@ -97,7 +98,7 @@ export const FormHomeDescription = () => {
                   <FormItem>
                     <FormLabel>Precio</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value) || 0)} />
                     </FormControl>
                     <FormDescription>
                       Precio por noche en pesos.
@@ -114,7 +115,7 @@ export const FormHomeDescription = () => {
                   <FormItem className="">
                     <FormLabel>Visitantes</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                     </FormControl>
                     <FormDescription>
                       Cantidad de personas permitidas.
@@ -130,7 +131,7 @@ export const FormHomeDescription = () => {
                   <FormItem className="">
                     <FormLabel>Habitaciones</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                     </FormControl>
                     <FormDescription>
                       Cantidad de habitaciones de la propiedad.
@@ -146,7 +147,7 @@ export const FormHomeDescription = () => {
                   <FormItem className="">
                     <FormLabel>Baños</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} onChange={(e) => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                     </FormControl>
                     <FormDescription>
                       Cantidad de baños de la propiedad.

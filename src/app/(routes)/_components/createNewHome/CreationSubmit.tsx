@@ -6,10 +6,14 @@ import { useCategoryStore } from '@/store';
 import { Button } from '@/components/ui';
 import { Loader2 } from 'lucide-react';
 
+
+
 export const CreationSubmit = ({isValid}: {isValid?: boolean}) => {
     const { pending } = useFormStatus();
-    const selectedCategory = useCategoryStore((state) => state.selectedCategory);
+    const selectedCategory = !!useCategoryStore((state) => state.selectedCategory);
     const isStructure = usePathname().includes('structure');
+
+    console.log({isStructure, selectedCategory, isValid, pending})
 
     return (
         <>
@@ -21,7 +25,7 @@ export const CreationSubmit = ({isValid}: {isValid?: boolean}) => {
                       </Button>
                     : <Button 
                         type='submit' 
-                        disabled={(isStructure) ? !selectedCategory : !isValid}
+                        disabled={(isStructure) ? selectedCategory : !isValid}
                         >
                         Siguiente
                      </Button>
