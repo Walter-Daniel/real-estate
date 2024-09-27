@@ -9,6 +9,7 @@ import { useCategoryStore } from '@/store';
 export const SelectCategory = () => {
     const selectedCategory = useCategoryStore((state) => state.selectedCategory) || "";
     const setSelectedCategory = useCategoryStore((state) => state.setSelectedCategory);
+    console.log(selectedCategory)
     return (
         <div className='grid grid-col-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-10 w-3/5 mx-auto mb-36'>
             <input type='hidden' name='categoryName' value={selectedCategory as string} />

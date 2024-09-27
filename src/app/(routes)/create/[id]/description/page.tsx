@@ -7,8 +7,8 @@ export default function DescriptionPage() {
         <h2 className='text-3xl font-semibold tracking-tight transition-colors'>
           Describe tu casa lo mejor que puedas.
         </h2>
-        <FormHomeDescription />
       </div>
+      <FormHomeDescription />
     </>
   );
 }
