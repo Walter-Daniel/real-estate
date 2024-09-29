@@ -22,7 +22,8 @@ export const createDescription= async (values: DescriptionSchemaType ) => {
             },
             data: {
             ...rest,
-            ...stringifiedValues
+            ...stringifiedValues,
+            addedDescription: true
             }
         });
     } catch (error) {
