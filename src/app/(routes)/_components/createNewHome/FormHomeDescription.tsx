@@ -184,7 +184,7 @@ export const FormHomeDescription = ({homeId}:{homeId: string}) => {
             </CardContent>
           </Card>
         </div>
-        <BottomBar isValid={form.formState.isValid} />
+        <BottomBar isValid={form.formState.isValid} isSubmitting={form.formState.isSubmitting}/>
       </form>
     </Form>
   )

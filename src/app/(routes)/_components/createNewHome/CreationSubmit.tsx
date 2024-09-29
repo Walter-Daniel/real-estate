@@ -6,19 +6,21 @@ import { useCategoryStore } from '@/store';
 import { Button } from '@/components/ui';
 import { Loader2 } from 'lucide-react';
 
+interface CreationSubmitProps {
+    isValid?: boolean;
+    isSubmitting?: boolean
+}
 
+export const CreationSubmit = ({ isValid, isSubmitting }:CreationSubmitProps) => {
 
-export const CreationSubmit = ({isValid}: {isValid?: boolean}) => {
     const { pending } = useFormStatus();
     const selectedCategory = !!useCategoryStore((state) => state.selectedCategory);
     const isStructure = usePathname().includes('structure');
 
-    console.log({isStructure, selectedCategory, isValid, pending})
-
     return (
         <>
             {
-                pending
+                pending || isSubmitting
                     ? <Button disabled>
                         <Loader2 className='h-4 w-4 mr-2 animate-spin'/>
                         Guardando
