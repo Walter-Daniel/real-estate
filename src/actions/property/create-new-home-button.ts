@@ -33,5 +33,17 @@ export const createNewHomeButton = async ({ userId }: { userId: string }) => {
         !data.addedLoaction
     ) {
         return redirect(`/create/${data.id}/address`);
+    }else if (
+        data.addedCategory &&
+        data.addedDescription &&
+        data.addedLoaction
+    ){
+        const data = await db.home.create({
+            data: {
+              userId: userId,
+            },
+          });
+      
+          return redirect(`/create/${data.id}/structure`);
     }
 }

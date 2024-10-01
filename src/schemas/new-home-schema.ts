@@ -25,4 +25,11 @@ export const DescriptionSchema = z.object({
     .optional(),
 });
 
+export const LocationSchema = z.object({
+  homeId: z.string(),
+  lat: z.string().min(1, { message: "Latitude is required" }),
+  lng: z.string().min(1, { message: "Longitude is required" }),
+});
+
 export type DescriptionSchemaType = z.infer<typeof DescriptionSchema>;
+export type LocationSchemaType = z.infer<typeof LocationSchema>;

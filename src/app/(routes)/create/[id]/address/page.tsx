@@ -1,14 +1,13 @@
-
 import { FormLocation } from "@/app/(routes)/_components";
 
-export default function AddressPage() {
+export default function AddressPage({params}: {params: {id: string}}) {
 
   return (
-    <div>
+    <div className="mb-36">
       <div className="w-3/5 mx-auto">
         <h2 className="text-3xl font-semibold tracking-tight transition-colors mb-10">Dónde está ubicada tu propiedad?</h2>
       </div>
-      <FormLocation />
+      <FormLocation homeId={params.id}/>
     </div>
   );
 }
