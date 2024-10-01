@@ -18,7 +18,7 @@ export const createLocation = async (location: LocationSchemaType) => {
               lat: parseFloat(lat),
               lng: parseFloat(lng)
           },
-          addedLoaction: true
+          addedLocation: true
       }
   });
 
