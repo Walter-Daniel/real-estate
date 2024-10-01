@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { DescriptionSchema, DescriptionSchemaType } from "@/schemas/new-home-schema"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader } from "@/components/ui"
+import { Card, CardContent } from "@/components/ui"
 import { BottomBar } from "./BottomBar"
 import { createDescription } from "@/actions"
 

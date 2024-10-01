@@ -9,7 +9,6 @@ interface BottomBarProps {
     isSubmitting?: boolean
 }
 
-
 export const BottomBar = ({isValid , isSubmitting}: BottomBarProps) => {
     return (
         <div className='fixed w-full bottom-0 z-10 bg-white border-t h-24'>
