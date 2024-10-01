@@ -22,7 +22,7 @@ export const createNewHomeButton = async ({ userId }: { userId: string }) => {
     } else if (
         !data.addedCategory &&
         !data.addedDescription &&
-        !data.addedLoaction
+        !data.addedLocation
     ) {
         return redirect(`/create/${data.id}/structure`);
     } else if (data.addedCategory && !data.addedDescription) {
@@ -30,13 +30,13 @@ export const createNewHomeButton = async ({ userId }: { userId: string }) => {
     } else if (
         data.addedCategory &&
         data.addedDescription &&
-        !data.addedLoaction
+        !data.addedLocation
     ) {
         return redirect(`/create/${data.id}/address`);
     }else if (
         data.addedCategory &&
         data.addedDescription &&
-        data.addedLoaction
+        data.addedLocation
     ){
         const data = await db.home.create({
             data: {
