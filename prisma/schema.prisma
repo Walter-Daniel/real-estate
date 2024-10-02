@@ -74,11 +74,11 @@ model Home {
 
   title        String?
   description  String?
-  guests       String?
-  bedrooms     String?
-  bathrooms    String?
+  guests       Int?
+  bedrooms     Int?
+  bathrooms    Int?
   photo        String?
-  price        Int?
+  price        Decimal? @db.Decimal(10, 2)
   categoryName String?
   location     Json?
   

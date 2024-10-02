@@ -19,11 +19,22 @@ import { Card, CardContent } from "@/components/ui"
 import { BottomBar } from "./BottomBar"
 import { createDescription } from "@/actions"
 
+interface FormInputs {
+  title: string;
+  slug: string;
+  description: string;
+  guests: number;
+  bedrooms: number;
+  bathrooms: number;
+  price:number;
+  photo?: File;
+}
+
+
 export const FormHomeDescription = ({homeId}:{homeId: string}) => {
-  const form = useForm<DescriptionSchemaType>({
-    resolver: zodResolver(DescriptionSchema),
+  const form = useForm<FormInputs>({
+    resolver: zodResolver(DescriptionSchema.omit({ id: true })),
     defaultValues: {
-      id: homeId,
       title: "",
       description: "",
       guests: 0,
@@ -33,26 +44,27 @@ export const FormHomeDescription = ({homeId}:{homeId: string}) => {
     }
   })
 
-  const onSubmit = async(values: DescriptionSchemaType) => {
-     await createDescription(values);
+  const onSubmit = async(values: FormInputs) => {
+    const formData = new FormData();
+    formData.append("id", homeId);
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("price", values.price.toString());
+    formData.append("guests", values.guests.toString());
+    formData.append("bedrooms", values.bedrooms.toString());
+    formData.append("bathrooms", values.bathrooms.toString());
+
+    if (values.photo) {
+      formData.append("photo", values.photo);
+    }
+    await createDescription(formData);
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="w-2/5 mx-auto  mb-36">
-          <FormField
-            control={form.control}
-            name="id"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input type="hidden" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <input defaultValue={homeId} name="homeId" hidden/>
           <Card className=" mt-10">
             <CardContent className="w-full space-y-2">
               {/* Title */}
