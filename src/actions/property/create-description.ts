@@ -12,7 +12,6 @@ export const createDescription = async (formData:FormData) => {
     const descriptionParsed = DescriptionSchema.safeParse(data);
 
     if(!descriptionParsed.success){
-        console.log('ERROR DE PARSEO')
         return {
             ok: false,
             message: 'Error de parseo'
@@ -20,16 +19,7 @@ export const createDescription = async (formData:FormData) => {
     }
 
     const {id, photo, ...rest} = descriptionParsed.data;
-
     let imageUrl: string | null = null;
-    // Convert number fields to strings
-    // const stringifiedValues = {
-    //     guests: guests.toString(),
-    //     bedrooms: bedrooms.toString(),
-    //     bathrooms: bathrooms.toString(),
-    // };
-
-
     if (photo) {
         imageUrl = await uploadImage(photo);
         if (!imageUrl) {

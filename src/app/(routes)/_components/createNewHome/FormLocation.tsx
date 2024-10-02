@@ -12,6 +12,8 @@ import { createLocation } from '@/actions';
 import { useForm } from 'react-hook-form';
 import { LocationSchema, LocationSchemaType } from '@/schemas/new-home-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 const libs: Library[] = ["core", "maps", "places", "marker"];
 
@@ -20,8 +22,13 @@ export const FormLocation = ({homeId}: {homeId: string}) => {
   const [autoComplete, setAutoComplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
   const [markers, setMarkers] = useState<google.maps.marker.AdvancedMarkerElement[]>([]);
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
+
+  //toast
+  const { toast } = useToast();
+
+  //route
+  const route = useRouter();
+
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
@@ -113,7 +120,19 @@ export const FormLocation = ({homeId}: {homeId: string}) => {
   })
 
   const onSubmit = async(values: LocationSchemaType) => {
-     await createLocation(values);
+     const { ok, message } = await createLocation(values);
+     if(!ok){
+      toast({
+        variant: 'destructive',
+        description: message
+      });
+     }else {
+      toast({
+        variant: 'success',
+        description: message
+      });
+      route.push('/');
+     }
   }
 
   return (
