@@ -11,18 +11,26 @@ export const DescriptionSchema = z.object({
     .max(30, { message: 'El título debe tener como máximo 30 caracteres.' }),
   description: z.string()
     .min(5, { message: 'La descripción debe tener como mínimo 5 caracteres.' }),
-  guests: z.number().int().positive(),
-  bedrooms: z.number().int().positive(),
-  bathrooms: z.number().int().positive(),
-  price: z.number().positive(),
-  photo: z
-    .instanceof(File)
-    .refine((file) => file.size <= MAX_FILE_SIZE, `El tamaño máximo del archivo es 5MB.`)
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Solo se aceptan archivos .jpg, .jpeg, .png y .webp."
-    )
-    .optional(),
+  guests: z.coerce
+    .number()
+    .int()
+    .positive({ message: 'El número de invitados debe ser un entero positivo.' }),
+
+  bedrooms: z.coerce
+    .number()
+    .int()
+    .positive({ message: 'El número de habitaciones debe ser un entero positivo.' }),
+
+  bathrooms: z.coerce
+    .number()
+    .int()
+    .positive({ message: 'El número de baños debe ser un entero positivo.' }),
+
+  price: z.coerce
+    .number()
+    .min(0)
+    .transform(val => Number(val.toFixed(2))),
+    photo: z.instanceof(File).optional(),
 });
 
 export const LocationSchema = z.object({
