@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { HouseIcon, MenuIcon, Notebook, PlusSquare, Star, User2 } from 'lucide-react';
+import { HouseIcon, MenuIcon, Notebook, PlusCircle, PlusSquare, Star, User2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
@@ -45,33 +45,33 @@ export const UserNavbar = () => {
                 {
                     user ? (
                         <>
-                            <DropdownMenuItem>
-                                <Button variant={'ghost'} onClick={() => createHomeWithId()}>
+                            <DropdownMenuItem className='p-0'>
+                                <Button onClick={() => createHomeWithId()}>
+                                    <PlusCircle className='w-4 h-4 mr-2' />
                                     Crear propiedad
                                 </Button>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <Link href="#" className='flex items-center'>
-                                <HouseIcon className='w-4 h-4 mr-2'/>
                                     Mis propiedades
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <Link href="#" className='flex items-center'>
-                                    <Star className='w-4 h-4 mr-2'/>
                                     Favoritos
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
                                 <Link href="#" className='flex items-center'>
-                                <Notebook className='w-4 h-4 mr-2'/>
                                     Mis reservaciones
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={onClick}>
-                                <ExitIcon className='w-4 h-4 mr-2' />
-                                Salir
+                            <DropdownMenuItem className='p-0'>
+                                <Button onClick={onClick} variant={'secondary'} className='w-full'>
+                                    <ExitIcon className='w-4 h-4 mr-2' />
+                                    Salir
+                                </Button>
                             </DropdownMenuItem>
                         </>
 
