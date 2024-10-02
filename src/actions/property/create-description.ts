@@ -19,9 +19,9 @@ export const createDescription = async (formData:FormData) => {
         }
     }
 
-    // const {  } = descriptionParsed.data;
+    const {id, photo, ...rest} = descriptionParsed.data;
 
-
+    let imageUrl: string | null = null;
     // Convert number fields to strings
     // const stringifiedValues = {
     //     guests: guests.toString(),
@@ -30,37 +30,36 @@ export const createDescription = async (formData:FormData) => {
     // };
 
 
-    // if (photo) {
-    //     imageUrl = await uploadImage(photo);
-    //     if (!imageUrl) {
-    //         return {
-    //             ok: false,
-    //             message: 'Error al subir imagen'
-    //         };
-    //     }
-    // }
+    if (photo) {
+        imageUrl = await uploadImage(photo);
+        if (!imageUrl) {
+            return {
+                ok: false,
+                message: 'Error al subir imagen'
+            };
+        }
+    }
 
-    // try {
-    //     await db.home.update({
-    //         where: {
-    //             id: id
-    //         },
-    //         data: {
-    //             ...rest,
-    //             ...stringifiedValues,
-    //             photo: imageUrl, // Include the image URL in the update
-    //             addedDescription: true
-    //         }
-    //     });
-    // } catch (error) {
-    //     console.error('Error al guardar la descripción:', error);
-    //     return {
-    //         ok: false,
-    //         message: 'Error al guardar la descripción'
-    //     };
-    // }
+    try {
+        await db.home.update({
+            where: {
+                id: id
+            },
+            data: {
+                ...rest,
+                photo: imageUrl, // Include the image URL in the update
+                addedDescription: true
+            }
+        });
+    } catch (error) {
+        console.error('Error al guardar la descripción:', error);
+        return {
+            ok: false,
+            message: 'Error al guardar la descripción'
+        };
+    }
 
-    // return redirect(`/create/${id}/address`);
+    return redirect(`/create/${id}/address`);
 };
 
 const uploadImage = async (image: File): Promise<string | null> => {
