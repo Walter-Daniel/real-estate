@@ -8,7 +8,6 @@ export const generatePasswordResetToken = async(email: string) => {
     const expires = new Date(new Date().getTime() + 3600 * 1000); //1hr
 
     const existingToken = await getPasswordResetTokenByEmail(email);
-    console.log({existingToken})
     if(existingToken){
         await db.passwordResetToken.delete({
             where: {
