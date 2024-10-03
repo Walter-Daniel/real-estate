@@ -14,7 +14,7 @@ interface ListingCardProps {
 
 export const ListingCard = ({title, photo, price}: ListingCardProps) => {
   return (
-    <Card className='w-[200px] rounded-lg'>
+    <Card className='w-[200px] rounded-lg overflow-hidden'>
       <div className="relative h-48 w-full">
         <Image
           src={photo}

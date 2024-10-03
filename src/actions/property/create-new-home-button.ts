@@ -3,7 +3,7 @@ import { db } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
 export const createNewHomeButton = async ({ userId }: { userId: string }) => {
-    const data = await db.home.findFirst({
+    const data = await db.house.findFirst({
         where: {
             userId
         },
@@ -13,7 +13,7 @@ export const createNewHomeButton = async ({ userId }: { userId: string }) => {
     });
 
     if (data === null) {
-        const data = await db.home.create({
+        const data = await db.house.create({
             data: {
                 userId
             }
@@ -38,7 +38,7 @@ export const createNewHomeButton = async ({ userId }: { userId: string }) => {
         data.addedDescription &&
         data.addedLocation
     ){
-        const data = await db.home.create({
+        const data = await db.house.create({
             data: {
               userId: userId,
             },

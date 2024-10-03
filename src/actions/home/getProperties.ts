@@ -4,7 +4,7 @@ import { db } from '@/lib/db';
 
 export const getProperties = async() => {
     try {
-        const properties = await db.home.findMany({
+        const properties = await db.house.findMany({
             where: {
                 addedLocation: true,
                 addedCategory: true,
