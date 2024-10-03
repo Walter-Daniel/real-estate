@@ -31,7 +31,7 @@ export const createDescription = async (formData:FormData) => {
     }
 
     try {
-        await db.home.update({
+        await db.house.update({
             where: {
                 id: id
             },

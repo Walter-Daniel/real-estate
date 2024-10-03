@@ -8,15 +8,15 @@ export const createLocation = async (location: LocationSchemaType) => {
     const { homeId, lat, lng } = location;
 
     try {
-       await db.home.update({
+       await db.house.update({
             where: {
                 id: homeId
             },
             data: {
-                location: {
-                    lat: parseFloat(lat),
-                    lng: parseFloat(lng)
-                },
+                // location: {
+                //     lat: parseFloat(lat),
+                //     lng: parseFloat(lng)
+                // },
                 addedLocation: true
             }
         });
