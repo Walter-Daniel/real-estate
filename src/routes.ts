@@ -27,6 +27,8 @@ export const apiAuthPrefix = "/api/auth";
 export const privateRoutes = [
     "/profile",
     "/create/[id]/structure",
+    "/create/[id]/location",
+    "/house/[id]",
 ]
  
 //Ruta por deferecto para la redirección después de iniciar sesión.

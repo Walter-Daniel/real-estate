@@ -5,21 +5,16 @@ import { HouseAddressSchemaType} from '@/schemas/new-home-schema';
 
 export const createLocation = async (location: HouseAddressSchemaType) => {
 
-    const { homeId, lat, lng } = location;
+    const { lat, lng, ...rest} = location;
 
     try {
-    //    await db.houseAddress.create({
-    //         where: {
-    //             id: homeId
-    //         },
-    //         data: {
-    //             // location: {
-    //             //     lat: parseFloat(lat),
-    //             //     lng: parseFloat(lng)
-    //             // },
-    //             // addedLocation: true
-    //         }
-    //     });
+       await db.houseAddress.create({
+            data: {
+                latitude: parseFloat(lat.toString()),
+                longitude: parseFloat(lng.toString()),
+                ...rest
+            }
+        });
 
         return {
             ok: true,

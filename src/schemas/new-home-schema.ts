@@ -1,9 +1,6 @@
 // schemas/new-home-schema.ts
 import { z } from 'zod';
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-
 export const DescriptionSchema = z.object({
   id: z.string(),
   title: z.string()
@@ -30,15 +27,15 @@ export const DescriptionSchema = z.object({
     .number()
     .min(0)
     .transform(val => Number(val.toFixed(2))),
-    photo: z.instanceof(File).optional(),
+    photo: z.instanceof(File)
 });
 
 export const HouseAddressSchema = z.object({
   homeId: z.string(),
-  lat: z.string().min(1, { message: "Latitude is required" }),
-  lng: z.string().min(1, { message: "Longitude is required" }),
+  locality: z.string().min(1, { message: "Latitude is required" }),
+  lat: z.number(),
+  lng: z.number(),
   street: z.string().min(1),
-  city: z.string().min(1),
   zipCode: z.string().min(1)
 });
 
