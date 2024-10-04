@@ -89,4 +89,4 @@ Las contribuciones son **bienvenidas**. Si tienes ideas o encuentras un bug, por
 Si deseas saber más o colaborar, contáctame:
 
 - **LinkedIn**: [Walter Daniel Carrizo](https://www.linkedin.com/in/walter-daniel-carrizo)
-- **Email**: [tu-email@example.com](mailto:walterdcarrizo.19@gmail.com)
+- **Email**: [walterdcarrizo.19@gmail.com](mailto:walterdcarrizo.19@gmail.com)
