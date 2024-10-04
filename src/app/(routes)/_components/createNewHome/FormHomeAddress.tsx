@@ -10,14 +10,16 @@ import { BottomBar } from './BottomBar';
 import { LocateFixedIcon } from 'lucide-react';
 import { createLocation } from '@/actions';
 import { useForm } from 'react-hook-form';
-import { LocationSchema, LocationSchemaType } from '@/schemas/new-home-schema';
+import { HouseAddressSchema, HouseAddressSchemaType } from '@/schemas/new-home-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { SelectLocality } from './SelectLocality';
+
 
 const libs: Library[] = ["core", "maps", "places", "marker"];
 
-export const FormLocation = ({homeId}: {homeId: string}) => {
+export const FormHomeAddress = ({ homeId }: { homeId: string }) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [autoComplete, setAutoComplete] = useState<google.maps.places.Autocomplete | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
@@ -44,7 +46,7 @@ export const FormLocation = ({homeId}: {homeId: string}) => {
         const place = autoComplete.getPlace();
         setSelectedPlace(place.name as string);
         const position = place.geometry?.location;
-        if(position){
+        if (position) {
           setMarker(position, place.name!);
           setValue('lat', position.lat().toString(), { shouldValidate: true });
           setValue('lng', position.lng().toString(), { shouldValidate: true });
@@ -53,22 +55,22 @@ export const FormLocation = ({homeId}: {homeId: string}) => {
     }
   }, [autoComplete]);
 
-  function setMarker(location: google.maps.LatLng, name: string){
-    if(!map) return;
+  function setMarker(location: google.maps.LatLng, name: string) {
+    if (!map) return;
     map.setCenter(location);
-    
+
     // Remove all existing markers
     markers.forEach(marker => {
       marker.map = null;
     });
     setMarkers([]);
-    
+
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map: map,
       position: location,
       title: name
     });
-    
+
     // Add the new marker to the array
     setMarkers([marker]);
   }
@@ -101,7 +103,7 @@ export const FormLocation = ({homeId}: {homeId: string}) => {
 
       setAutoComplete(gAutoComplete);
       setMap(gmap);
-    } 
+    }
   }, [isLoaded]);
 
 
@@ -110,55 +112,74 @@ export const FormLocation = ({homeId}: {homeId: string}) => {
     formState: { isSubmitting, isValid },
     setValue,
     register
-  } = useForm<LocationSchemaType>({
-    resolver: zodResolver(LocationSchema),
+  } = useForm<HouseAddressSchemaType>({
+    resolver: zodResolver(HouseAddressSchema),
     defaultValues: {
       homeId: homeId,
       lat: '',
-      lng: ''
+      lng: '',
+      street: '',
+      city: '',
+      zipCode: ''
     }
   })
 
-  const onSubmit = async(values: LocationSchemaType) => {
-     const { ok, message } = await createLocation(values);
-     if(!ok){
+  const onSubmit = async (values: HouseAddressSchemaType) => {
+    const { ok, message } = await createLocation(values);
+    if (!ok) {
       toast({
         variant: 'destructive',
         description: message
       });
-     }else {
+    } else {
       toast({
         variant: 'success',
         description: message
       });
       route.push('/');
-     }
+    }
   }
 
   return (
-   <form onSubmit={handleSubmit(onSubmit)}>
-    <input type="hidden" name='homeId' value={homeId} />
-     <div className='w-3/5 m-auto'>
-      <div className='mb-5'>
-        <Input ref={placeAutoCompleteRef}/>
-        <Label className={`flex mt-4 ${selectedPlace && 'text-primary '}`}>
-          <LocateFixedIcon className='w-4 h-4 mr-2' />
-          {selectedPlace ? `Ubicación seleccionada: ${selectedPlace}`: 'Aquí aparecera la dirección seleccionada'}
-        </Label>
-        <Input 
-          type="text" 
-          className='hidden'
-          {...register('lat')}
-        />
-        <Input 
-          type="text" 
-          className='hidden'
-          {...register('lng')}
-        />
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input type="hidden" name='homeId' value={homeId} />
+      <div className='w-3/5 m-auto'>
+        <div className='mb-5'>
+          <SelectLocality />
+          <Input ref={placeAutoCompleteRef} placeholder='Ingresa una dirección' />
+          <Label className={`flex mt-4 ${selectedPlace && 'text-primary '}`}>
+            <LocateFixedIcon className='w-4 h-4 mr-2' />
+            {selectedPlace ? `Ubicación seleccionada: ${selectedPlace}` : 'Aquí aparecera la dirección seleccionada'}
+          </Label>
+          <Input
+            type="text"
+            className='hidden'
+            {...register('lat')}
+          />
+          <Input
+            type="text"
+            className='hidden'
+            {...register('lng')}
+          />
+          <Input
+            type="text"
+            className='hidden'
+            {...register('lng')}
+          />
+          <Input
+            type="text"
+            className='hidden'
+            {...register('lng')}
+          />
+          <Input
+            type="text"
+            className='hidden'
+            {...register('lng')}
+          />
+        </div>
+        <Map mapRef={mapRef} isLoaded={isLoaded} />
       </div>
-      <Map mapRef={mapRef} isLoaded={isLoaded}/>
-    </div>
-    <BottomBar isSubmitting={isSubmitting} isValid={isValid}/>
-   </form>
+      <BottomBar isSubmitting={isSubmitting} isValid={isValid} />
+    </form>
   )
 }

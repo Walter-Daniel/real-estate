@@ -96,8 +96,7 @@ model House {
 model HouseAddress {
   id        String   @id @default(uuid())
   street    String
-  city      String
-  localy    String
+  locality  String
   zipCode   String
   latitude  Float
   longitude Float
