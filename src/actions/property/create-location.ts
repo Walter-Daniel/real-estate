@@ -1,25 +1,25 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { LocationSchemaType } from '@/schemas/new-home-schema';
+import { HouseAddressSchemaType} from '@/schemas/new-home-schema';
 
-export const createLocation = async (location: LocationSchemaType) => {
+export const createLocation = async (location: HouseAddressSchemaType) => {
 
     const { homeId, lat, lng } = location;
 
     try {
-       await db.house.update({
-            where: {
-                id: homeId
-            },
-            data: {
-                // location: {
-                //     lat: parseFloat(lat),
-                //     lng: parseFloat(lng)
-                // },
-                addedLocation: true
-            }
-        });
+    //    await db.houseAddress.create({
+    //         where: {
+    //             id: homeId
+    //         },
+    //         data: {
+    //             // location: {
+    //             //     lat: parseFloat(lat),
+    //             //     lng: parseFloat(lng)
+    //             // },
+    //             // addedLocation: true
+    //         }
+    //     });
 
         return {
             ok: true,

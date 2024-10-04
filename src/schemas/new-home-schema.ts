@@ -33,11 +33,14 @@ export const DescriptionSchema = z.object({
     photo: z.instanceof(File).optional(),
 });
 
-export const LocationSchema = z.object({
+export const HouseAddressSchema = z.object({
   homeId: z.string(),
   lat: z.string().min(1, { message: "Latitude is required" }),
   lng: z.string().min(1, { message: "Longitude is required" }),
+  street: z.string().min(1),
+  city: z.string().min(1),
+  zipCode: z.string().min(1)
 });
 
 export type DescriptionSchemaType = z.infer<typeof DescriptionSchema>;
-export type LocationSchemaType = z.infer<typeof LocationSchema>;
+export type HouseAddressSchemaType = z.infer<typeof HouseAddressSchema>;
