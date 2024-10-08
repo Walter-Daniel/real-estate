@@ -48,8 +48,9 @@ export const FormHomeAddress = ({ homeId }: { homeId: string }) => {
         const position = place.geometry?.location;
         if (position) {
           setMarker(position, place.name!);
-          setValue('lat', position.lat().toString(), { shouldValidate: true });
-          setValue('lng', position.lng().toString(), { shouldValidate: true });
+          setValue('lat', position.lat(), { shouldValidate: true });
+          setValue('lng', position.lng(), { shouldValidate: true });
+          setValue('street', place.name as string , { shouldValidate: true });
         }
       })
     }
@@ -116,10 +117,10 @@ export const FormHomeAddress = ({ homeId }: { homeId: string }) => {
     resolver: zodResolver(HouseAddressSchema),
     defaultValues: {
       homeId: homeId,
-      lat: '',
-      lng: '',
+      locality: '',
+      lat: 0,
+      lng: 0,
       street: '',
-      city: '',
       zipCode: ''
     }
   })
@@ -145,37 +146,12 @@ export const FormHomeAddress = ({ homeId }: { homeId: string }) => {
       <input type="hidden" name='homeId' value={homeId} />
       <div className='w-3/5 m-auto'>
         <div className='mb-5'>
-          <SelectLocality />
+          <SelectLocality setValue={setValue} />
           <Input ref={placeAutoCompleteRef} placeholder='Ingresa una dirección' />
           <Label className={`flex mt-4 ${selectedPlace && 'text-primary '}`}>
             <LocateFixedIcon className='w-4 h-4 mr-2' />
             {selectedPlace ? `Ubicación seleccionada: ${selectedPlace}` : 'Aquí aparecera la dirección seleccionada'}
           </Label>
-          <Input
-            type="text"
-            className='hidden'
-            {...register('lat')}
-          />
-          <Input
-            type="text"
-            className='hidden'
-            {...register('lng')}
-          />
-          <Input
-            type="text"
-            className='hidden'
-            {...register('lng')}
-          />
-          <Input
-            type="text"
-            className='hidden'
-            {...register('lng')}
-          />
-          <Input
-            type="text"
-            className='hidden'
-            {...register('lng')}
-          />
         </div>
         <Map mapRef={mapRef} isLoaded={isLoaded} />
       </div>
