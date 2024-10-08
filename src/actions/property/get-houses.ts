@@ -23,7 +23,7 @@ export const getHouses = async() => {
             title: property.title!.toString(),
             description: property.description,
             category: property.categoryName,
-            price: property.price!.toString(),
+            price: property.price || 0,
             userId: property.userId || '',
             photo: property.photo!.toString(),
       
