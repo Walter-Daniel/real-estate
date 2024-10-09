@@ -1,6 +1,6 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui';
+import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui';
 import { Badge } from '@/components/ui/badge';
-import { DollarSign, MapPin } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -17,9 +17,8 @@ interface ListingCardProps {
 
 export const ListingCard = ({title, photo, price, street, locality, houseId}: ListingCardProps) => {
   return (
-    <Link href={`/house/${houseId}`}>
-        <Card className='w-[300px] rounded-lg overflow-hidden'>
-          <div className="relative h-48 w-full">
+        <Card className='rounded-lg overflow-hidden transition-opacity transform duration-700 ease-in-out opacity-0 animate-fadeIn'>
+          <div className="relative h-72 w-full">
             <Image
               src={photo}
               alt={title}
@@ -41,8 +40,10 @@ export const ListingCard = ({title, photo, price, street, locality, houseId}: Li
               <span className="font-semibold text-lg">{formatPriceARS(price)}</span>
               <span className="text-sm text-gray-500 ml-1">/ Noche</span>
             </div>
+            <Button asChild size='sm' >
+              <Link href={`/house/${houseId}`} >Ver más</Link>
+            </Button>
           </CardFooter>
         </Card>
-    </Link>
   )
 }

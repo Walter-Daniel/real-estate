@@ -108,6 +108,21 @@ body {
   -ms-overflow-style: none;
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.7s forwards;
+}
+
 /* .scroll-item {
   scroll-snap-align: start;
 } */
