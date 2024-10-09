@@ -3,14 +3,15 @@
 import { db } from '@/lib/db';
 
 export const getHouses = async({
-    searchParams
+    searchParams,
+    userId
   }: {
+    userId: string | undefined;
     searchParams?: {
       filter?: string;
     }
   }) => {
 
-    console.log({searchParams})
     try {
         const properties = await db.house.findMany({
             where: {
@@ -21,7 +22,12 @@ export const getHouses = async({
             },
             
             include:{
-                Address: true
+                Address: true,
+                Favorite: {
+                  where: { 
+                    userId: userId
+                  }
+                }
             }
         });
 
@@ -42,6 +48,9 @@ export const getHouses = async({
             zipCode: property.Address?.zipCode || '',
             latitude: property.Address ? property.Address.latitude.toString() : '',
             longitude: property.Address ? property.Address.longitude.toString() : '',
+
+            //Favorite
+            favorite: property.Favorite
           }));
       
           return transformedProperties;
