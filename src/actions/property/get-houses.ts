@@ -2,13 +2,22 @@
 
 import { db } from '@/lib/db';
 
-export const getHouses = async() => {
+export const getHouses = async({
+    searchParams
+  }: {
+    searchParams?: {
+      filter?: string;
+    }
+  }) => {
+
+    console.log({searchParams})
     try {
         const properties = await db.house.findMany({
             where: {
                 addedLocation: true,
                 addedCategory: true,
-                addedDescription: true
+                addedDescription: true,
+                categoryName: searchParams?.filter ?? undefined
             },
             
             include:{
