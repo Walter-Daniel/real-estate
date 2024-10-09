@@ -3,6 +3,8 @@ import { MapFilterItems } from './_components';
 import { ListingCard } from './_components/listingCard';
 import { getHouses } from '@/actions/property/get-houses';
 import { SkeletonCard } from './_components/skeletonCard';
+import { useSession } from 'next-auth/react';
+import { auth } from '@/auth';
 
 export default function Home(
   {
@@ -30,7 +32,9 @@ async function ShowItems({
     filter?: string;
   }
 }) {
-  const data = await getHouses({ searchParams: searchParams });
+  const session = await auth();
+  const userId = session?.user?.id;
+  const data = await getHouses({ searchParams: searchParams, userId });
   return (
     <section className='grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8'>
       {
@@ -43,6 +47,9 @@ async function ShowItems({
             locality={property.locality}
             street={property.street}
             houseId={property.id}
+            userId={userId}
+            favoriteId={property.favorite[0]?.id}
+            isInFavoriteList={property.favorite.length > 0 ? true : false}
           />
         ))
       }

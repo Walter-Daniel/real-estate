@@ -8,7 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { HouseIcon, MenuIcon, Notebook, PlusCircle, PlusSquare, Star, User2 } from 'lucide-react';
+import { MenuIcon, PlusCircle, User2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
