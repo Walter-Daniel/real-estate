@@ -5,7 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { formatPriceARS } from '@/helpers/formatPriceArg';
-import { AddFavoriteButton } from '../addFavoriteButton';
+import { AddFavoriteButton, DeleteFavoriteButton } from '../addFavoriteButton';
+import { addToFavorite, deleteFavorite } from '@/actions/favorite';
 
 interface ListingCardProps {
   houseId: string;
@@ -20,6 +21,7 @@ interface ListingCardProps {
 }
 
 export const ListingCard = ({ title, photo, price, street, locality, houseId, userId, isInFavoriteList, favoriteId }: ListingCardProps) => {
+
   return (
     <Card className='rounded-lg overflow-hidden transition-opacity transform duration-700 ease-in-out opacity-0 animate-fadeIn'>
       <div className="relative h-72 w-full">
@@ -35,15 +37,21 @@ export const ListingCard = ({ title, photo, price, street, locality, houseId, us
             <div className='absolute right-1 top-2'>
               {
                 isInFavoriteList ? (
-                  <AddFavoriteButton />
+                  <form action={deleteFavorite}>
+                    <input type='hidden' name='favoriteId' value={favoriteId}/>
+                    <DeleteFavoriteButton />
+                  </form>
                 ) : (
-                  <AddFavoriteButton />
+                  <form action={addToFavorite}>
+                    <input type='hidden' name='houseId' value={houseId}/>
+                    <input type='hidden' name='userId' value={userId}/>
+                    <AddFavoriteButton />
+                  </form>
                 )
               }
             </div>
           )
         }
-        {/* <Badge variant="secondary" className='absolute right-1 top-2'>{locality}</Badge> */}
       </div>
       <CardContent className="p-4">
         <h2 className=" font-semibold mb-2 line-clamp-1">{title}</h2>

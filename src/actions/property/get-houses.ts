@@ -12,7 +12,6 @@ export const getHouses = async({
     }
   }) => {
 
-    console.log({searchParams})
     try {
         const properties = await db.house.findMany({
             where: {
