@@ -57,7 +57,7 @@ export const UserNavbar = () => {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                <Link href="#" className='flex items-center'>
+                                <Link href="/favorites" className='flex items-center'>
                                     Favoritos
                                 </Link>
                             </DropdownMenuItem>

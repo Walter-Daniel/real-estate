@@ -29,6 +29,7 @@ export const privateRoutes = [
     "/create/[id]/structure",
     "/create/[id]/location",
     "/house/[id]",
+    "/favorites"
 ]
  
 //Ruta por deferecto para la redirección después de iniciar sesión.
