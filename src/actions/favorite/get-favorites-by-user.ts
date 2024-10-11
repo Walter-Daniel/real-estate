@@ -5,7 +5,7 @@ import { db } from '@/lib/db';
 export const getFavoritesByUser = async(userId: string) => {
 
     try {
-        const favorites = await db.favorite.findMany({
+        const data = await db.favorite.findMany({
             where:{
                 userId: userId
             },
@@ -37,12 +37,10 @@ export const getFavoritesByUser = async(userId: string) => {
                 }
             }
         })
-        return favorites;
+        if(!data) return [];
+        return data;
     } catch (error) {
-        return {
-            ok: false,
-            message: 'Error al obtener lista de favoritos'
-        }
+        return []
     }
     
 
