@@ -16,15 +16,6 @@ import {
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import {
   Table,
@@ -34,6 +25,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Image from "next/image"
+import Link from "next/link"
+import { formatPriceARS } from "@/helpers/formatPriceArg"
 
 interface Favorite {
   User: {
@@ -56,71 +50,54 @@ interface Favorite {
 
 const columns: ColumnDef<Favorite>[] = [
   {
-    accessorKey: "House.id",
-    header: "House ID",
-    cell: ({ row }) => <div>{row.getValue("House.id")}</div>,
+    accessorFn: (row) => row.House?.photo,
+    id: "House.photo",
+    header: "Imagen",
+    cell: ({ row }) => {
+      const photoUrl = row.original.House?.photo;
+      return photoUrl ? (
+        <Image src={photoUrl} alt="House" width={200} height={200} className="w-36 h-20 object-cover bg-center" />
+      ) : (
+        <div>Sin foto</div>
+      );
+    },
   },
   {
-    accessorKey: "House.title",
+    accessorFn: (row) => row.House?.title,
+    id: "House.title",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Title
+          Título
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     },
-    cell: ({ row }) => <div>{row.getValue("House.title")}</div>,
+    cell: ({ row }) => <div>{row.original.House?.title || "N/A"}</div>,
   },
   {
-    accessorKey: "House.price",
-    header: () => <div className="text-right">Price</div>,
-    cell: ({ row }) => {
-      const price = row.getValue("House.price") as number | null
-      const formatted = price ? new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price) : "N/A"
-      return <div className="text-right font-medium">{formatted}</div>
-    },
+    accessorFn: (row) => row.House?.price,
+    id: "House.price",
+    header: () => <div className="text-right">Precio por noche</div>,
+    cell: ({ row }) => <div className="text-right font-medium">{formatPriceARS(row.original.House?.price)}</div>,
   },
   {
-    accessorKey: "House.Address.locality",
-    header: "Locality",
-    cell: ({ row }) => <div>{row.getValue("House.Address.locality")}</div>,
+    accessorFn: (row) => row.House?.Address?.locality,
+    id: "House.Address.locality",
+    header: () => <div className="text-right">Localidad o comuna</div>,
+    cell: ({ row }) => <div className="text-right">{row.original.House?.Address?.locality || "N/A"}</div>,
   },
   {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const favorite = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(favorite.House?.id || '')}
-            >
-              Copy house ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View house details</DropdownMenuItem>
-            <DropdownMenuItem>Remove from favorites</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
+    accessorFn: (row) => row.House?.id,
+    id: "House.id",
+    header: () => <div className="text-center">Acción</div>,
+    cell: ({ row }) => <div className="flex justify-center">
+      <Button size='sm' asChild><Link href={`/house/${row.original.House?.id}`}>Ver propiedad</Link></Button>
+    </div>
+  }
 ]
 
 export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
@@ -130,7 +107,7 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
-    favorites,
+    data: favorites,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -152,39 +129,13 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter titles..."
-          value={(table.getColumn("House.title")?.getFilterValue() as string) ?? ""}
+          placeholder="Buscar por localidad o comuna..."
+          value={(table.getColumn("House.Address.locality")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("House.title")?.setFilterValue(event.target.value)
+            table.getColumn("House.Address.locality")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -223,7 +174,7 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  No se encontraron resultados.
                 </TableCell>
               </TableRow>
             )}
@@ -231,10 +182,6 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
         <div className="space-x-2">
           <Button
             variant="outline"
@@ -242,7 +189,7 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Anterior
           </Button>
           <Button
             variant="outline"
@@ -250,7 +197,7 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Siguiente
           </Button>
         </div>
       </div>
