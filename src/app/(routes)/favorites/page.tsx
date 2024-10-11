@@ -13,7 +13,7 @@ export default async function FavoritesPage() {
     const favorites = await getFavoritesByUser(userId);
     
   return (
-    <section className="container mx-auto py-6 lg:px-10 mt-10">
+    <section className="container mx-auto py-6 lg:px-10 mt-10 lg:w-3/4">
       <h2 className="text-3xl font-semibold tracking-tight">Favoritos</h2>
       {
         favorites.length === 0
