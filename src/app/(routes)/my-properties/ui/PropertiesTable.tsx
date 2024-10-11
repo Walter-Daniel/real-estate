@@ -23,16 +23,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { columns, Favorite } from "./columns"
+import { columns } from "./propertiesColumn"
+import { House } from "@prisma/client"
 
-export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
+export const PropertiesTable = ({ properties }: { properties: House[] }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
-    data: favorites,
+    data: properties,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -54,10 +55,10 @@ export const FavoriteTable = ({ favorites }: { favorites: Favorite[] }) => {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Buscar por localidad o comuna..."
-          value={(table.getColumn("House.Address.locality")?.getFilterValue() as string) ?? ""}
+          placeholder="Buscar por título de la propiedad..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("House.Address.locality")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

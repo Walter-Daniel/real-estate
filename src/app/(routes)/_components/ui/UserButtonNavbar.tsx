@@ -52,7 +52,7 @@ export const UserNavbar = () => {
                                 </Button>
                             </DropdownMenuItem>
                             <DropdownMenuItem>
-                                <Link href="#" className='flex items-center'>
+                                <Link href="/my-properties" className='flex items-center'>
                                     Mis propiedades
                                 </Link>
                             </DropdownMenuItem>
