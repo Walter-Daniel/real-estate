@@ -1,0 +1,1 @@
+export { getMyProperties } from './get-properties';
