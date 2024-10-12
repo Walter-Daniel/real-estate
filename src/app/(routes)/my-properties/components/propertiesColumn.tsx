@@ -1,3 +1,5 @@
+
+
 import Image from "next/image"
 import Link from "next/link"
 import { formatPriceARS } from "@/helpers/formatPriceArg"
@@ -9,19 +11,19 @@ import { House } from "@prisma/client";
 
 
 export const columns: ColumnDef<House>[] = [
-    {
-      accessorKey: 'photo',
-      id: "photo",
-      header: "Imagen",
-      cell: ({ row }) => {
-        const photoUrl = row.original.photo;
-        return photoUrl ? (
-          <Image src={photoUrl} alt="House" width={200} height={200} className="w-36 h-20 object-cover bg-center" />
-        ) : (
-          <div>Sin foto</div>
-        );
-      },
-    },
+    // {
+    //   accessorKey: 'photo',
+    //   id: "photo",
+    //   header: "Imagen",
+    //   cell: ({ row }) => {
+    //     const photoUrl = row.original.photo[0];
+    //     return photoUrl ? (
+    //       <Image src={photoUrl} alt="House" width={200} height={200} className="w-36 h-20 object-cover bg-center" />
+    //     ) : (
+    //       <div>Sin foto</div>
+    //     );
+    //   },
+    // },
     {
       accessorKey: 'title',
       id: "title",
