@@ -71,14 +71,13 @@ model PasswordResetToken {
 
 model House {
   id           String  @id @default(uuid())
-  title        String?
-  description  String?
-  guests       Int?
-  bedrooms     Int?
-  bathrooms    Int?
-  photo        String?
-  price        Float?
-  categoryName String?
+  title        String
+  description  String
+  guests       Int
+  bedrooms     Int
+  bathrooms    Int
+  price        Float
+  categoryName String
 
   Favorite Favorite[]
   Booking  Booking[]
@@ -87,10 +86,19 @@ model House {
   addedDescription Boolean @default(false)
   addedLocation    Boolean @default(false)
 
-  createdAT DateTime     @default(now())
-  User      User?        @relation(fields: [userId], references: [id])
-  userId    String?
-  Address   HouseAddress?
+  createdAT  DateTime      @default(now())
+  User       User?         @relation(fields: [userId], references: [id])
+  userId     String?
+  Address    HouseAddress?
+  HouseImage HouseImage[]
+}
+
+model HouseImage {
+  id  Int    @id @default(autoincrement())
+  url String
+
+  house   House  @relation(fields: [houseId], references: [id])
+  houseId String
 }
 
 model HouseAddress {
@@ -103,16 +111,16 @@ model HouseAddress {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  home   House  @relation(fields: [homeId], references: [id])
-  homeId String @unique
+  house   House  @relation(fields: [houseId], references: [id])
+  houseId String @unique
 }
 
 model Favorite {
   id     String  @id @default(uuid())
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
-  House  House?  @relation(fields: [homeId], references: [id])
-  homeId String?
+  House  House?  @relation(fields: [houseId], references: [id])
+  houseId String?
 
   createAt DateTime @default(now())
 }
@@ -128,6 +136,6 @@ model Booking {
 
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
-  House  House?  @relation(fields: [homeId], references: [id])
-  homeId String?
+  House  House?  @relation(fields: [houseId], references: [id])
+  houseId String?
 }
