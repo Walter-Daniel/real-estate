@@ -6,21 +6,21 @@ import { revalidatePath } from 'next/cache';
 
 export const createLocation = async (location: HouseAddressSchemaType) => {
 
-    const { homeId,lat, lng, ...rest} = location;
+    const { houseId,lat, lng, ...rest} = location;
 
     try {
        await db.houseAddress.create({
             data: {
                 latitude: parseFloat(lat.toString()),
                 longitude: parseFloat(lng.toString()),
-                homeId,
+                houseId: houseId,
                 ...rest
             }
         });
 
         const findHouse = await db.house.update({
             where: {
-                id: homeId
+                id: houseId
             },
             data:{
                 addedLocation: true

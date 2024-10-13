@@ -46,9 +46,9 @@ export const UserNavbar = () => {
                     user ? (
                         <>
                             <DropdownMenuItem className='p-0'>
-                                <Button onClick={() => createHomeWithId()}>
+                                <Button>
                                     <PlusCircle className='w-4 h-4 mr-2' />
-                                    Crear propiedad
+                                    <Link href={`houses/${user.id}/create`}>Crear propiedad</Link>
                                 </Button>
                             </DropdownMenuItem>
                             <DropdownMenuItem>

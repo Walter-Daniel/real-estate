@@ -13,14 +13,11 @@ interface CreationSubmitProps {
 
 export const CreationSubmit = ({ isValid, isSubmitting }: CreationSubmitProps) => {
     const { pending } = useFormStatus();
-    const selectedCategory = !!useCategoryStore((state) => state.selectedCategory);
     const isStructure = usePathname().includes('structure');
-    const isDisabled = isStructure 
-        ? !selectedCategory  // Disabled if in structure path and no category selected
-        : !isValid;          // Disabled if not in structure path and not valid
+    const isDisabled = !isValid;          // Disabled if not in structure path and not valid
     return (
         <>
-            {
+            {/* {
                 pending || isSubmitting
                     ? <Button disabled>
                         <Loader2 className='h-4 w-4 mr-2 animate-spin' />
@@ -28,11 +25,15 @@ export const CreationSubmit = ({ isValid, isSubmitting }: CreationSubmitProps) =
                     </Button>
                     : <Button
                         type='submit'
-                        disabled={isDisabled}
+                        // disabled={isDisabled}
                     >
                         Siguiente
                     </Button>
-            }
+            } */}
+            <Button
+                        type='submit'
+                        // disabled={isDisabled}
+                    ></Button>
         </>
     )
 }

@@ -12,59 +12,85 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { DescriptionSchema, DescriptionSchemaType } from "@/schemas/new-home-schema"
 import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent } from "@/components/ui"
-import { BottomBar } from "./BottomBar"
+import { Button, Card, CardContent } from "@/components/ui"
 import { createDescription } from "@/actions"
+import { categoryItems } from "@/lib/categoryItemis"
+import { redirect, useRouter } from "next/navigation"
 
 interface FormInputs {
   title: string;
   slug: string;
   description: string;
+  categoryName: string;
   guests: number;
   bedrooms: number;
   bathrooms: number;
   price:number;
-  photo?: File;
+  images?: FileList;
 }
 
 
-export const FormHomeDescription = ({homeId}:{homeId: string}) => {
+export const CreateHomeForm = ({userId}:{userId: string}) => {
+  const router = useRouter();
+ 
   const form = useForm<FormInputs>({
-    resolver: zodResolver(DescriptionSchema.omit({ id: true })),
+    resolver: zodResolver(DescriptionSchema.omit({ userId: true })),
     defaultValues: {
       title: "",
       description: "",
+      categoryName: "",
       guests: 0,
       bedrooms: 0,
       bathrooms: 0,
-      price: 0
+      price: 0,
+      images: undefined
     }
   })
 
   const onSubmit = async(values: FormInputs) => {
+    console.log({values})
     const formData = new FormData();
-    formData.append("id", homeId);
+    const { images } = values;
+    formData.append("userId", userId);
     formData.append("title", values.title);
     formData.append("description", values.description);
+    formData.append("categoryName", values.categoryName);
     formData.append("price", values.price.toString());
     formData.append("guests", values.guests.toString());
     formData.append("bedrooms", values.bedrooms.toString());
     formData.append("bathrooms", values.bathrooms.toString());
 
-    if (values.photo) {
-      formData.append("photo", values.photo);
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
     }
-    await createDescription(formData);
+    const resp = await createDescription(formData);
+    if(resp.ok){
+      form.reset();
+      redirect(`houses/${userId}/address`);
+    }
+  }
+
+  const onClick = () => {
+    router.push('/')
   }
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="">
-          <input defaultValue={homeId} name="homeId" hidden/>
+        <div className="mb-4">
+          {/* <input defaultValue={homeId} name="homeId" hidden/> */}
           <Card className=" mt-10">
             <CardContent className="w-full space-y-2">
               {/* Title */}
@@ -102,6 +128,36 @@ export const FormHomeDescription = ({homeId}:{homeId: string}) => {
                   </FormItem>
                 )}
               />
+              {/* Category */}
+              
+            <FormField
+              control={form.control}
+              name="categoryName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Categoría</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecciona una categoría" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {
+                        categoryItems.map(categoryName => (
+                          <SelectItem value={categoryName.name} key={categoryName.id}>{categoryName.title}</SelectItem>
+                        ))
+                      }
+                      
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    Elige la categoría que mejor describe tu propiedad.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
               {/* Price */}
               <FormField
                 control={form.control}
@@ -171,16 +227,17 @@ export const FormHomeDescription = ({homeId}:{homeId: string}) => {
                {/* Image */}
               <FormField
                 control={form.control}
-                name="photo"
+                name="images"
                 render={({ field: { value, onChange, ...field } }) => (
                   <FormItem>
                     <FormLabel>Foto</FormLabel>
                     <FormControl>
                       <Input
                         type="file"
+                        multiple
                         accept=".jpg,.jpeg,.png,.webp"
                         onChange={(e) => {
-                          const file = e.target.files?.[0];
+                          const file = e.target.files;
                           onChange(file);
                         }}
                         {...field}
@@ -196,7 +253,11 @@ export const FormHomeDescription = ({homeId}:{homeId: string}) => {
             </CardContent>
           </Card>
         </div>
-        <BottomBar isValid={form.formState.isValid} isSubmitting={form.formState.isSubmitting}/>
+        {/* <BottomBar isValid={form.formState.isValid} isSubmitting={form.formState.isSubmitting}/> */}
+        <div className="flex justify-between">
+        <Button variant='secondary' type="button" onClick={onClick}>Salir</Button>
+        <Button type="submit" disabled={!form.formState.isValid}>Siguiente</Button>
+        </div>
       </form>
     </Form>
   )
