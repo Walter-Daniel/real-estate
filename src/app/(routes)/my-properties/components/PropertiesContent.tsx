@@ -1,7 +1,6 @@
 import { getMyProperties } from "@/actions/my-properties";
 import { PropertiesTable } from "./PropertiesTable";
-import { createNewHomeButton } from "@/actions";
-import { Button } from "@/components/ui/button";
+import { Empty } from "./empty";
 
 export default async function PropertiesContent({ userId }: { userId: string }) {
   const myProperties = await getMyProperties(userId);
@@ -11,19 +10,4 @@ export default async function PropertiesContent({ userId }: { userId: string }) 
   } else {
     return <Empty userId={userId} />;
   }
-}
-
-function Empty({userId}: {userId: string}) {
-  const createHomeWithId = createNewHomeButton.bind(null, {
-    userId: userId
-  });
-
-  return (
-    <div className="pt-2">
-      <p>Lista vacía. Por favor, agrega una propiedad.</p>
-      <Button variant='secondary' onClick={() => createHomeWithId()}>
-        Agregar propiedad
-      </Button>
-    </div>
-  );
 }
