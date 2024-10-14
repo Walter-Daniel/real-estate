@@ -26,6 +26,7 @@ import { Button, Card, CardContent } from "@/components/ui"
 import { createDescription } from "@/actions"
 import { categoryItems } from "@/lib/categoryItemis"
 import { redirect, useRouter } from "next/navigation"
+import { useCurrentUser } from "@/hooks/useCurrentUser"
 
 interface FormInputs {
   title: string;
@@ -40,7 +41,8 @@ interface FormInputs {
 }
 
 
-export const CreateHomeForm = ({userId}:{userId: string}) => {
+export const CreateHomeForm = () => {
+  const user = useCurrentUser();
   const router = useRouter();
  
   const form = useForm<FormInputs>({
@@ -61,7 +63,7 @@ export const CreateHomeForm = ({userId}:{userId: string}) => {
     console.log({values})
     const formData = new FormData();
     const { images } = values;
-    formData.append("userId", userId);
+    formData.append("userId", user!.id!);
     formData.append("title", values.title);
     formData.append("description", values.description);
     formData.append("categoryName", values.categoryName);
@@ -78,7 +80,8 @@ export const CreateHomeForm = ({userId}:{userId: string}) => {
     const resp = await createDescription(formData);
     if(resp.ok){
       form.reset();
-      redirect(`houses/${resp.houseId}/address`);
+      router.replace(`houses/${resp.houseId}/address`)
+      // redirect(`houses/${resp.houseId}/address`);
     }
   }
 

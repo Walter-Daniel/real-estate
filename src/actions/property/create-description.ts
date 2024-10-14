@@ -2,10 +2,10 @@
 
 import { db } from "@/lib/db";
 import { DescriptionSchema } from "@/schemas/new-home-schema";
-import { redirect } from "next/navigation";
-import { v2 as cloudinary } from "cloudinary";
 import { revalidatePath } from "next/cache";
-cloudinary.config(process.env.CLOUDINARY_URL ?? "");
+
+
+
 
 export const createDescription = async (formData: FormData) => {
   const files = formData.getAll("images"); // Obtenemos todas las imágenes
@@ -73,20 +73,26 @@ export const createDescription = async (formData: FormData) => {
 const uploadImages = async (images: File[]) => {
   try {
     const uploadPromises = images.map(async (image) => {
-      try {
-        const buffer = await image.arrayBuffer();
-        const base64Image = Buffer.from(buffer).toString("base64");
+      const formData = new FormData();
+      formData.append('file', image);
 
-        return cloudinary.uploader
-          .upload(`data:image/png;base64,${base64Image}`)
-          .then((r) => r.secure_url);
-      } catch (error) {
-        return null;
+      const response = await fetch('http://localhost:3000/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
       }
+
+      const data = await response.json();
+      return data.url;
     });
+
     const uploadedImages = await Promise.all(uploadPromises);
     return uploadedImages;
   } catch (error) {
+    console.error('Upload error:', error);
     return null;
   }
 };
