@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 
-export const getMyProperties = async(userId: string) => {
+export const getHouses = async(userId: string) => {
     console.log({userId})
     try {
         const properties = await db.house.findMany({

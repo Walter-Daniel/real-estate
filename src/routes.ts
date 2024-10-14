@@ -28,7 +28,7 @@ export const privateRoutes = [
     "/profile",
     "/houses/create",
     "/houses/[id]/address",
-    "/house/[id]",
+    "/houses/[id]",
     "/favorites"
 ]
  

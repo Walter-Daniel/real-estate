@@ -7,6 +7,7 @@ import {
   authRoutes,
   publicRoutes
 } from "@/routes";
+import { getHouse } from "./actions";
 
 
 const { auth } = NextAuth(authConfig);
@@ -17,6 +18,8 @@ export default auth(async function middleware(req) {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+  const isHouseRoute = nextUrl.pathname.startsWith('/houses/');
+  const isHouseAddressRoute = nextUrl.pathname.match(/^\/houses\/[^/]+\/address$/);
 
   if(isApiAuthRoute){
     return
@@ -32,6 +35,8 @@ export default auth(async function middleware(req) {
   if(!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
+
+  
 
   console.log("ROUTE: ", req.nextUrl.pathname)
   console.log("IS LOGGEDIN: ", isLoggedIn)
