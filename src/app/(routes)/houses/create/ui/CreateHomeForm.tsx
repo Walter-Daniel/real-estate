@@ -78,7 +78,7 @@ export const CreateHomeForm = ({userId}:{userId: string}) => {
     const resp = await createDescription(formData);
     if(resp.ok){
       form.reset();
-      redirect(`houses/${userId}/address`);
+      redirect(`houses/${resp.houseId}/address`);
     }
   }
 

@@ -1,6 +1,13 @@
+import { auth } from "@/auth";
 import { CreateHomeForm } from "./ui/CreateHomeForm";
+import { redirect } from "next/navigation";
 
-export default function CreateHomePage({params}: {params:{id: string}}) {
+export default async function CreateHomePage() {
+  const session = await auth();
+  if(!session || !session.user?.id){
+    redirect('/')
+  }
+  const id = session.user.id
   return (
     <div className="mb-16">
       <div className="pt-4">
@@ -8,7 +15,7 @@ export default function CreateHomePage({params}: {params:{id: string}}) {
           Describe tu casa lo mejor que puedas.
         </h2>
       </div>
-      <CreateHomeForm userId={params.id}/>
+      <CreateHomeForm userId={id}/>
     </div>
   );
 }

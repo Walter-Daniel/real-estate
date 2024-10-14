@@ -82,9 +82,7 @@ model House {
   Favorite Favorite[]
   Booking  Booking[]
 
-  addedCategory    Boolean @default(false)
-  addedDescription Boolean @default(false)
-  addedLocation    Boolean @default(false)
+  isComplete Boolean @default(false)
 
   createdAT  DateTime      @default(now())
   User       User?         @relation(fields: [userId], references: [id])

@@ -57,7 +57,8 @@ export const createDescription = async (formData: FormData) => {
 
       return {
         ok: true,
-        message: 'Exitoso'
+        message: 'Exitoso',
+        houseId: house.id
       }
     
  } catch (error) {
