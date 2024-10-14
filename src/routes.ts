@@ -26,8 +26,8 @@ export const apiAuthPrefix = "/api/auth";
 //Requieren autenticación
 export const privateRoutes = [
     "/profile",
-    "/create/[id]/structure",
-    "/create/[id]/location",
+    "/houses/create",
+    "/houses/[id]/address",
     "/house/[id]",
     "/favorites"
 ]

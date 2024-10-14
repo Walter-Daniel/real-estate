@@ -31,8 +31,7 @@ export const FormHomeAddress = ({ houseId }: { houseId: string }) => {
 
   //route
   const route = useRouter();
-
-
+  
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY as string,
     libraries: libs
