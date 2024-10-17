@@ -3,8 +3,14 @@
 import { db } from "@/lib/db";
 import { DescriptionSchema } from "@/schemas/new-home-schema";
 import { revalidatePath } from "next/cache";
+import { v2 as cloudinary } from 'cloudinary';
 
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 
 export const createDescription = async (formData: FormData) => {
@@ -70,29 +76,25 @@ export const createDescription = async (formData: FormData) => {
  }
 };
 
-const uploadImages = async (images: File[]) => {
+const uploadImages = async(images: File[]) => {
+
   try {
-    const uploadPromises = images.map(async (image) => {
-      const formData = new FormData();
-      formData.append('file', image);
+    const uploadPromises = images.map(async(image) => {
 
-      const response = await fetch('http://localhost:3000/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      try {
+        const buffer = await image.arrayBuffer();
+        const base64Image = Buffer.from(buffer).toString('base64');
+  
+        return cloudinary.uploader.upload(`data:image/png;base64,${base64Image}`).then( r => r.secure_url );
+      } catch (error) {
+        return null;
       }
-
-      const data = await response.json();
-      return data.url;
     });
-
     const uploadedImages = await Promise.all(uploadPromises);
     return uploadedImages;
+
   } catch (error) {
-    console.error('Upload error:', error);
     return null;
   }
-};
+
+}

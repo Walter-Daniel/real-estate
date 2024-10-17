@@ -37,7 +37,7 @@ export const createCategoryPage = async (formData: FormData) => {
     }
 
     const home = categoryParsed.data;
-    const result = await db.house.update({
+    await db.house.update({
         where: {
             id: home.homeId
         },

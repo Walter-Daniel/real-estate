@@ -80,7 +80,7 @@ export const CreateHomeForm = () => {
     const resp = await createDescription(formData);
     if(resp.ok){
       form.reset();
-      router.replace(`houses/${resp.houseId}/address`)
+      router.push(`/houses/${resp.houseId}/address`)
       // redirect(`houses/${resp.houseId}/address`);
     }
   }

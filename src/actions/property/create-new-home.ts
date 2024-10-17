@@ -14,7 +14,7 @@ export const createNewHome = async() => {
     }
 
     const { user } = session;
-    const dbUser = await db.user.findUnique({
+    await db.user.findUnique({
         where:{
             id: user.id
         }
