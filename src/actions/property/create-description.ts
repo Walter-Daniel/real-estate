@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { DescriptionSchema } from "@/schemas/new-home-schema";
 import { revalidatePath } from "next/cache";
 import { v2 as cloudinary } from 'cloudinary';
+import { formatPriceToFloat } from "@/helpers/formatPriceToFloat";
 
 
 cloudinary.config({
@@ -14,7 +15,7 @@ cloudinary.config({
 
 
 export const createDescription = async (formData: FormData) => {
-  const files = formData.getAll("images"); // Obtenemos todas las imágenes
+  const files = formData.getAll("images") as File[]; // Obtenemos todas las imágenes
   const data = {
     userId: formData.get("userId") as string,
     title: formData.get("title") as string,
@@ -24,8 +25,10 @@ export const createDescription = async (formData: FormData) => {
     bedrooms: formData.get("bedrooms") as string,
     bathrooms: formData.get("bathrooms") as string,
     price: formData.get("price") as string,
-    images: files, // Pasamos los archivos al esquema
+    images: files
   };
+
+  console.log({data})
   const descriptionParsed = DescriptionSchema.safeParse(data);
 
   if (!descriptionParsed.success) {
@@ -36,12 +39,14 @@ export const createDescription = async (formData: FormData) => {
     };
   }
 
-  const { images, userId, ...rest } = descriptionParsed.data;
+  const { images, userId, price, ...rest } = descriptionParsed.data;
+  const transformPrice = formatPriceToFloat(price)
 
  try {
     const house =  await db.house.create({
         data: {
             ...rest,
+            price: transformPrice,
             userId: userId
         }
       })
