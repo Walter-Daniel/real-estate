@@ -54,7 +54,7 @@ export const FormHomeAddress = ({ homeId }: { homeId: string }) => {
         }
       })
     }
-  }, [autoComplete]);
+  }, [autoComplete, setMarker]);
 
   function setMarker(location: google.maps.LatLng, name: string) {
     if (!map) return;
@@ -116,7 +116,7 @@ export const FormHomeAddress = ({ homeId }: { homeId: string }) => {
   } = useForm<HouseAddressSchemaType>({
     resolver: zodResolver(HouseAddressSchema),
     defaultValues: {
-      homeId: homeId,
+      houseId: homeId,
       locality: '',
       lat: 0,
       lng: 0,

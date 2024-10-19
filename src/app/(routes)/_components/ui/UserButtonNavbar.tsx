@@ -15,12 +15,15 @@ import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { logoutAction } from '@/actions/auth/logout';
 import { ExitIcon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui';
+import { createNewHouseButton } from '@/actions/property/create-new-house-button';
 
 export const UserNavbar = () => {
     const user = useCurrentUser();
     const onClick = () => {
         logoutAction()
     }
+
+    const createHouse = createNewHouseButton.bind(null, {userId: user?.id as string});
   
     return (
         <DropdownMenu>
@@ -43,9 +46,9 @@ export const UserNavbar = () => {
                     user ? (
                         <>
                             <DropdownMenuItem className='p-0'>
-                                <Button>
+                                <Button onClick={() => createHouse()}>
                                     <PlusCircle className='w-4 h-4 mr-2' />
-                                    <Link href={`houses/create`}>Crear propiedad</Link>
+                                    Crear propiedad
                                 </Button>
                             </DropdownMenuItem>
                             <DropdownMenuItem>

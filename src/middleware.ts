@@ -7,8 +7,6 @@ import {
   authRoutes,
   publicRoutes
 } from "@/routes";
-import { getHouse } from "./actions";
-
 
 const { auth } = NextAuth(authConfig);
 export default auth(async function middleware(req) {
@@ -18,8 +16,6 @@ export default auth(async function middleware(req) {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  const isHouseRoute = nextUrl.pathname.startsWith('/houses/');
-  const isHouseAddressRoute = nextUrl.pathname.match(/^\/houses\/[^/]+\/address$/);
 
   if(isApiAuthRoute){
     return

@@ -20,7 +20,6 @@ import { Input } from '@/components/ui/input';
 import { registerSchema } from '@/schemas/auth.schema';
 import { ErrorMessage, SuccessMessage } from '@/components/messages';
 import { register } from '@/actions/register';
-import { cn } from '@/lib/utils';
 
 
 export const RegisterForm = () => {
@@ -104,6 +103,7 @@ export const RegisterForm = () => {
             type="submit" 
             className="w-full"
             variant="secondary"
+            disabled={isPending}
           >
             Registrarse
           </Button>

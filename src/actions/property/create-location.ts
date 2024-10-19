@@ -23,7 +23,7 @@ export const createLocation = async (location: HouseAddressSchemaType) => {
                 id: houseId
             },
             data:{
-                addedLocation: true
+                isComplete: true
             }
         });
 

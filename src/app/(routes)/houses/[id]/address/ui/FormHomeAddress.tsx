@@ -54,7 +54,7 @@ export const FormHomeAddress = ({ houseId }: { houseId: string }) => {
         }
       })
     }
-  }, [autoComplete]);
+  }, [autoComplete, setMarker,]);
 
   function setMarker(location: google.maps.LatLng, name: string) {
     if (!map) return;
@@ -137,7 +137,7 @@ export const FormHomeAddress = ({ houseId }: { houseId: string }) => {
         variant: 'success',
         description: message
       });
-      route.push('/');
+      route.push(`/houses/${houseId}`);
     }
   }
 

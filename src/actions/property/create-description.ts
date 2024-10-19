@@ -3,12 +3,19 @@
 import { db } from "@/lib/db";
 import { DescriptionSchema } from "@/schemas/new-home-schema";
 import { revalidatePath } from "next/cache";
+import { v2 as cloudinary } from 'cloudinary';
+import { formatPriceToFloat } from "@/helpers/formatPriceToFloat";
 
 
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 
 export const createDescription = async (formData: FormData) => {
-  const files = formData.getAll("images"); // Obtenemos todas las imágenes
+  const files = formData.getAll("images") as File[]; // Obtenemos todas las imágenes
   const data = {
     userId: formData.get("userId") as string,
     title: formData.get("title") as string,
@@ -18,8 +25,10 @@ export const createDescription = async (formData: FormData) => {
     bedrooms: formData.get("bedrooms") as string,
     bathrooms: formData.get("bathrooms") as string,
     price: formData.get("price") as string,
-    images: files, // Pasamos los archivos al esquema
+    images: files
   };
+
+  console.log({data})
   const descriptionParsed = DescriptionSchema.safeParse(data);
 
   if (!descriptionParsed.success) {
@@ -30,12 +39,14 @@ export const createDescription = async (formData: FormData) => {
     };
   }
 
-  const { images, userId, ...rest } = descriptionParsed.data;
+  const { images, userId, price, ...rest } = descriptionParsed.data;
+  const transformPrice = formatPriceToFloat(price)
 
  try {
     const house =  await db.house.create({
         data: {
             ...rest,
+            price: transformPrice,
             userId: userId
         }
       })
@@ -70,29 +81,25 @@ export const createDescription = async (formData: FormData) => {
  }
 };
 
-const uploadImages = async (images: File[]) => {
+const uploadImages = async(images: File[]) => {
+
   try {
-    const uploadPromises = images.map(async (image) => {
-      const formData = new FormData();
-      formData.append('file', image);
+    const uploadPromises = images.map(async(image) => {
 
-      const response = await fetch('http://localhost:3000/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      try {
+        const buffer = await image.arrayBuffer();
+        const base64Image = Buffer.from(buffer).toString('base64');
+  
+        return cloudinary.uploader.upload(`data:image/png;base64,${base64Image}`).then( r => r.secure_url );
+      } catch (error) {
+        return null;
       }
-
-      const data = await response.json();
-      return data.url;
     });
-
     const uploadedImages = await Promise.all(uploadPromises);
     return uploadedImages;
+
   } catch (error) {
-    console.error('Upload error:', error);
     return null;
   }
-};
+
+}
