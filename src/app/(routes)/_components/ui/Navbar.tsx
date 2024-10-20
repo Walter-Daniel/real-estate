@@ -4,21 +4,20 @@ import * as React from "react"
 import Image from "next/image"
 import { UserNavbar } from "./UserButtonNavbar"
 import { Search } from "./Search"
+import Link from "next/link"
 
 export const Navbar = () => {
     return (
         <div className="flex justify-between px-6 py-2 md:items-center shadow-md fixed top-0 w-full z-10 bg-background">
-            <div className="flex items-center">
-                <Image
+            <Link href={'/'}>
+            <Image
                     src="/logo.png"
-                    width={50}
-                    height={50}
+                    width={150}
+                    height={150}
                     alt="Logo"
                     className="h-auto mr-1"
                 />
-                <span className="font-bold">Valles.tuc</span>
-
-            </div>
+            </Link>
             <Search />
             <UserNavbar />
         </div>
