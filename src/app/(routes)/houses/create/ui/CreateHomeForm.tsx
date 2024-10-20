@@ -31,6 +31,7 @@ import { categoryItems } from "@/lib/categoryItemis";
 import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { toast } from "@/hooks/use-toast";
+import { ButtonSubmit } from "./ButtonSubmit";
 
 export const CreateHomeForm = () => {
   const user = useCurrentUser();
@@ -84,6 +85,7 @@ export const CreateHomeForm = () => {
     router.push(`/houses/${houseId}/address`);
   };
 
+  form.formState.isSubmitting
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -243,7 +245,7 @@ export const CreateHomeForm = () => {
                       <Input
                         type="file"
                         multiple
-                        accept=".jpg,.jpeg,.png,.webp"
+                        accept=".jpg,.jpeg,.png,.webp, .avif"
                         onChange={(e) => {
                           const file = e.target.files;
                           onChange(file);
@@ -262,13 +264,7 @@ export const CreateHomeForm = () => {
             </CardContent>
           </Card>
         </div>
-        {/* <BottomBar isValid={form.formState.isValid} isSubmitting={form.formState.isSubmitting}/> */}
-        <div className="flex justify-between">
-          <Button variant="secondary" type="button" onClick={onClick}>
-            Salir
-          </Button>
-          <Button type="submit">Siguiente</Button>
-        </div>
+        <ButtonSubmit onClick={onClick} isSubmitting={form.formState.isSubmitting}/>
       </form>
     </Form>
   );
