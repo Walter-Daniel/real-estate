@@ -15,13 +15,12 @@ export const getHouses = async({
     try {
         const properties = await db.house.findMany({
             where: {
-                addedLocation: true,
-                addedCategory: true,
-                addedDescription: true,
+                isComplete: true,
                 categoryName: searchParams?.filter ?? undefined
             },
             
             include:{
+                HouseImage: true,
                 Address: true,
                 Favorite: {
                   where: { 
@@ -37,17 +36,15 @@ export const getHouses = async({
             id: property.id,
             title: property.title!.toString(),
             description: property.description,
-            category: property.categoryName,
             price: property.price || 0,
             userId: property.userId || '',
-            photo: property.photo!.toString(),
+
+            //House images
+            image: property.HouseImage[0].url,
       
             // Address properties
-            street: property.Address?.street || '',
-            locality: property.Address?.locality || '',
-            zipCode: property.Address?.zipCode || '',
-            latitude: property.Address ? property.Address.latitude.toString() : '',
-            longitude: property.Address ? property.Address.longitude.toString() : '',
+            street: property.Address?.street ,
+            locality: property.Address?.locality,
 
             //Favorite
             favorite: property.Favorite
@@ -57,6 +54,6 @@ export const getHouses = async({
 
     } catch (error) {
         console.log('[GET-PROPERTIES]: ', error)
-        return
+        return []
     }
 }
