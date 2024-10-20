@@ -6,7 +6,6 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import { Library } from '@googlemaps/js-api-loader'
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-// import { BottomBar } from './BottomBar';
 import { LocateFixedIcon } from 'lucide-react';
 import { createLocation } from '@/actions';
 import { useForm } from 'react-hook-form';
@@ -16,6 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { SelectLocality } from './SelectLocality';
 import { Button } from '@/components/ui';
+import { ButtonSubmit } from './ButtonSubmit';
 
 
 const libs: Library[] = ["core", "maps", "places", "marker"];
@@ -110,9 +110,8 @@ export const FormHomeAddress = ({ houseId }: { houseId: string }) => {
 
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
     setValue,
-    register
   } = useForm<HouseAddressSchemaType>({
     resolver: zodResolver(HouseAddressSchema),
     defaultValues: {
@@ -155,10 +154,7 @@ export const FormHomeAddress = ({ houseId }: { houseId: string }) => {
         </div>
         <Map mapRef={mapRef} isLoaded={isLoaded} />
       </div>
-      {/* <BottomBar isSubmitting={isSubmitting} isValid={isValid} /> */}
-      <div className='flex justify-end w-full mt-4'>
-      <Button type='submit'>Guardar</Button>
-      </div>
+      <ButtonSubmit isSubmitting={isSubmitting}/>
     </form>
   )
 }

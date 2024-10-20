@@ -6,14 +6,16 @@ const ACCEPTED_IMAGE_TYPES = [
   "image/jpg",
   "image/png",
   "image/webp",
+  "image/avif"
 ];
 
 export const DescriptionSchema = z.object({
   userId: z.string(),
   title: z
     .string()
+    .trim()
     .min(5, { message: "El título debe tener como mínimo 5 caracteres." })
-    .max(30, { message: "El título debe tener como máximo 30 caracteres." }),
+    .max(60, { message: "El título debe tener como máximo 60 caracteres." }),
   description: z
     .string()
     .min(5, { message: "La descripción debe tener como mínimo 5 caracteres." }),
@@ -22,6 +24,7 @@ export const DescriptionSchema = z.object({
     .string({
       invalid_type_error: 'Por favor, ingrese un numero entero. Ej: 3'
     })
+    .trim()
     .min(1, "Este campo es requerido")
     .refine((value) => /^\d+$/.test(value), "Debe ser un número entero")
     .transform((value) => parseInt(value, 10))
@@ -33,6 +36,7 @@ export const DescriptionSchema = z.object({
     .string({
       invalid_type_error: 'Por favor, ingrese un numero entero. Ej: 2'
     })
+    .trim()
     .min(1, "Este campo es requerido")
     .refine((value) => /^\d+$/.test(value), "Debe ser un número entero")
     .transform((value) => parseInt(value, 10))
@@ -44,6 +48,7 @@ export const DescriptionSchema = z.object({
     .string({
       invalid_type_error: 'Por favor, ingrese un numero entero. Ej: 5'
     })
+    .trim()
     .min(1, "Este campo es requerido")
     .refine((value) => /^\d+$/.test(value), "Debe ser un número entero")
     .transform((value) => parseInt(value, 10))
@@ -55,15 +60,11 @@ export const DescriptionSchema = z.object({
     .string({
       invalid_type_error: 'Por favor, ingrese el precio. Ej: 5.000,90'
     })
+    .trim()
     .regex(
       /^\d{1,3}(\.\d{3})*(\,\d{1,2})?$/,
       "Formato inválido. Use puntos como separadores de miles y coma para decimales. Ej: 10.500,60"
     ),
-    // .transform((val) => {
-    //   // Remove thousands separators and replace comma with dot for decimal
-    //   const numericValue = parseFloat(val.replace(/\./g, "").replace(",", "."));
-    //   return isNaN(numericValue) ? 0 : numericValue;
-    // }),
   images: z
     .any()
     .refine((files) => files?.length === 3, {
@@ -73,7 +74,7 @@ export const DescriptionSchema = z.object({
       message: `Cada archivo debe ser menor o igual a 5MB.`,
     })
     .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type), {
-      message: "Solo se aceptan archivos .jpg, .jpeg, .png y .webp.",
+      message: "Solo se aceptan archivos .avif, .jpg, .jpeg, .png, y .webp.",
     })
     .transform((files) => Array.from(files)),
 });
