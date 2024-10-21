@@ -25,7 +25,7 @@ export const addToFavorite = async(formData: FormData) => {
     try {
         await db.favorite.create({
             data: {
-                homeId: houseId,
+                houseId: houseId,
                 userId: userId
             }
         })

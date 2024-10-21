@@ -5,7 +5,7 @@ import { db } from '@/lib/db';
 export const getFavoritesByUser = async(userId: string) => {
 
     try {
-        const data = await db.favorite.findMany({
+        const favorites = await db.favorite.findMany({
             where:{
                 userId: userId
             },
@@ -15,7 +15,6 @@ export const getFavoritesByUser = async(userId: string) => {
                         id: true,
                         title: true,
                         price: true,
-                        photo: true,
                         Address: {
                             select: {
                                 locality: true,
@@ -26,19 +25,30 @@ export const getFavoritesByUser = async(userId: string) => {
                             select: {
                                 name: true
                             }
+                        },
+                        HouseImage: {
+                            take: 1,
+                            select: {
+                                url: true
+                            }
                         }
                     },
                     
-                },
-                User: {
-                    select:{
-                        name: true
-                    }
                 }
             }
-        })
-        if(!data) return [];
-        return data;
+        });
+
+        const transformedFavorites = favorites.map((favorite) => ({
+            houseId: favorite.House?.id,
+            title: favorite.House?.title,
+            price: favorite.House?.price,
+            locality: favorite.House?.Address?.locality,
+            street: favorite.House?.Address?.street,
+            owner: favorite.House?.User?.name,
+            imageUrl: favorite.House?.HouseImage[0].url
+
+        }))
+        return transformedFavorites;
     } catch (error) {
         return []
     }

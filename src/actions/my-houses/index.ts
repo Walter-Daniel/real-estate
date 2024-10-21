@@ -1,2 +1,2 @@
-export { getHouses } from './get-houses';
+export { getHousesByUser } from './get-houses-by-user';
 export { getHouse } from './get-house';
