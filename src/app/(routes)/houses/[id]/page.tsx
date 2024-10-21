@@ -5,6 +5,7 @@ import { formatPriceARS } from "@/helpers/formatPriceArg";
 import { ButtonRent } from "./ui/ButtonRent";
 import { DetailItems } from "./ui/DetailItems";
 import LocationMap from "./ui/LocationMap";
+import { DescriptionHouse } from "./ui/DescriptionHouse";
 
 interface HousePageProps {
   params: {
@@ -33,10 +34,7 @@ export default async function HousePage({ params }: HousePageProps) {
             bedrooms={house.bedrooms}
             guest={house.guests}
           />
-          <p>
-            <span className="font-semibold ">Descripción: </span>
-            {house.description}
-          </p>
+          <DescriptionHouse description={house.description} />
           <LocationMap  
             description={house.Address?.street!}
             latitude={house.Address?.latitude!}

@@ -72,9 +72,9 @@ const LocationMap = ({
   }, [])
 
   return (
-    <div className="max-w-2xl mx-auto py-2">
+    <div className="max-w-2xl mx-auto py-4">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold mb-2">Ubicación</h2>
+        <h2 className="text-xl font-semibold mb-2">Ubicación</h2>
         <p className="text-gray-600">{description}</p>
       </div>
       {isLoaded ? (
