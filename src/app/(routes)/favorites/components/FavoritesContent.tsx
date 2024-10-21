@@ -5,6 +5,8 @@ import { FavoriteTable } from "./FavoriteTable";
 export const FavoritesContent = async({userId}:{userId: string}) => {
     const favorites = await getFavoritesByUser(userId);
 
+ 
+
     if(favorites.length > 0){
       return <FavoriteTable favorites={favorites}/>
     }else {

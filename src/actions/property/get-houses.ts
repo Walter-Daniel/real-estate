@@ -35,9 +35,7 @@ export const getHouses = async({
         const transformedProperties = properties.map((property) => ({
             id: property.id,
             title: property.title!.toString(),
-            description: property.description,
-            price: property.price || 0,
-            userId: property.userId || '',
+            price: property.price,
 
             //House images
             image: property.HouseImage[0].url,
