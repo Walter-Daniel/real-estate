@@ -1,7 +1,6 @@
 import { FormHomeAddress } from "./ui/FormHomeAddress";
 
 export default function AddressPage({params}: {params:{id: string}}) {
-  console.log(params.id)
   return (
     <div className="mb-16">
       <div>
