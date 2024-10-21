@@ -79,7 +79,7 @@ export const ListingCard = ({
           <span className="text-sm text-gray-500 ml-1">/ Noche</span>
         </div>
         <Button asChild size="sm">
-          <Link href={`/house/${houseId}`}>Ver más</Link>
+          <Link href={`/houses/${houseId}`}>Ver más</Link>
         </Button>
       </CardFooter>
     </Card>
