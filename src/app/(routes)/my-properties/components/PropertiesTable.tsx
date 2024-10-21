@@ -23,10 +23,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { columns } from "./propertiesColumn"
-import { House } from "@prisma/client"
+import { columns, HouseProperties } from "./propertiesColumn"
 
-export const PropertiesTable = ({ properties }: { properties: House[] }) => {
+export const PropertiesTable = ({ properties }: { properties: HouseProperties[] }) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
