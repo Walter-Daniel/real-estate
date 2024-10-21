@@ -29,7 +29,7 @@ export function CarouselImages({ images }: Props) {
                 alt="Imagenes de la casa"
                 width={1200}
                 height={800}
-                className="h-[90vh] object-cover"
+                className="h-[100vh] object-cover"
               />
             </div>
           </CarouselItem>
