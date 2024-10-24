@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useCallback, useEffect } from 'react'
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
+import { GoogleMap, useJsApiLoader } from '@react-google-maps/api'
 import { Library } from '@googlemaps/js-api-loader'
 
 interface LocationMapProps {
@@ -12,12 +12,11 @@ interface LocationMapProps {
 
 const containerStyle: React.CSSProperties = {
   width: '100%',
-  height: '400px'
+  height: '300px'
 }
 
 const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAP_ID as string
 const libs: Library[] = ["core", "maps", "places", "marker"];
-
 
 const LocationMap = ({ 
   description,
@@ -82,7 +81,7 @@ const LocationMap = ({
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={15}
+            zoom={10}
             onLoad={onLoad}
             onUnmount={onUnmount}
             options={{

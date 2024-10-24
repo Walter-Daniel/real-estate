@@ -5,7 +5,7 @@ export default function HousesLayout({
  children: React.ReactNode;
 }) {
   return (
-    <div className='px-10 mx-auto'>
+    <div className='px-2 lg:px-10 mx-auto'>
       {children}
     </div>
   );

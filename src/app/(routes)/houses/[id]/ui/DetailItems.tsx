@@ -9,7 +9,7 @@ interface DetailProps {
 
 export const DetailItems = ({ bathrooms, bedrooms, guest }: DetailProps) => {
   return (
-    <section className="w-full py-4 flex gap-4">
+    <section className="w-full py-4 flex gap-4 flex-wrap">
       <div className="flex items-center border rounded-md px-4 py-2 bg-black text-white text-sm font-semibold">
         <User className="w-5 h-5 mr-2"/>
         Personas: {guest}
