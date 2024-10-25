@@ -5,7 +5,7 @@ import dynamic from "next/dynamic"
 import { SkeletonLoader } from "./ui/SkeleteonLoader"
 
 const CarouselImages = dynamic(() => import("./ui/Carousel").then(mod => mod.CarouselImages), { ssr: false })
-const ButtonRent = dynamic(() => import("./ui/ButtonRent").then(mod => mod.ButtonRent))
+const GoToBookingButton = dynamic(() => import("./ui/GoToBookingButton").then(mod => mod.GoToBookingButton))
 const DetailItems = dynamic(() => import("./ui/DetailItems").then(mod => mod.DetailItems))
 const LocationMap = dynamic(() => import("./ui/LocationMap"), { ssr: false })
 const DescriptionHouse = dynamic(() => import("./ui/DescriptionHouse").then(mod => mod.DescriptionHouse))
@@ -52,7 +52,7 @@ async function HouseDetails({ id }: { id: string }) {
           />
         </Suspense>
         <Suspense fallback={<div className="h-10 bg-gray-200 animate-pulse" />}>
-          <ButtonRent houseId={id} />
+          <GoToBookingButton houseId={id} />
         </Suspense>
       </section>
     </div>
