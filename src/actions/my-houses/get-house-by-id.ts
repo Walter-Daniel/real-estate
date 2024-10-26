@@ -20,7 +20,8 @@ export const getHouseById = async(houseId: string) => {
                 HouseImage:{
                     select: {
                         url: true,
-                    }
+                    },
+                    take: 1
                 },
                 Address: {
                     select: {
